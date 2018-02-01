@@ -19,12 +19,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/items/stories/{item}', 'ItemController@stories');
 
-Auth::routes();
+Route::resource('/items', 'ItemController');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('/stories', 'StoryController');
 
-Auth::routes();
+Route::get('/getuser/{id}', 'UserController@getUserById');
 
-Route::get('/home', 'HomeController@index')->name('home');
-
+Route::get('/search', 'SearchController@searchItems');
