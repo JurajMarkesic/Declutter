@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Item;
 use Illuminate\Http\Request;
+use Auth;
 
 class ItemController extends Controller
 {
@@ -54,7 +55,12 @@ class ItemController extends Controller
     {
         $stories = $item->stories()->get();
 
-        return $stories;
+        $isLoggedIn = Auth::check();
+
+        return response()->json([
+           'stories' => $stories,
+           'isLoggedIn' => $isLoggedIn
+        ]);
     }
 
 

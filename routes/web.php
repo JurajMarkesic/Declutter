@@ -34,3 +34,7 @@ Route::get('/profile/edit','UserController@edit');
 Route::get('/profile/{id}', 'UserController@profile');
 
 Route::patch('/profile', 'UserController@update');
+
+Route::get('/changePassword','UserController@showChangePasswordForm');
+
+Route::post('/changePassword','UserController@changePassword');

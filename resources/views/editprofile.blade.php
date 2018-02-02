@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+    <a href="/changePassword">
+        <button class="btn btn-primary">Change Password</button>
+    </a>
+
+    <br>
+
     <form action="/profile" method="POST" enctype="multipart/form-data" class="form">
         <input type="hidden" name="_method" value="PATCH">
         {{ csrf_field() }}

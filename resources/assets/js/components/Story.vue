@@ -13,7 +13,7 @@
         <div v-else>
             <p>{{ user.name }}</p>
             <p>{{ story.body }}</p>
-            <p>{{ story.cost }}</p>
+            <p>${{ story.cost }}</p>
         </div>
 
         <div v-if="isUsersStory">

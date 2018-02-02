@@ -58463,7 +58463,7 @@ var render = function() {
           _vm._v(" "),
           _c("p", [_vm._v(_vm._s(_vm.story.body))]),
           _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(_vm.story.cost))])
+          _c("p", [_vm._v("$" + _vm._s(_vm.story.cost))])
         ]),
     _vm._v(" "),
     _vm.isUsersStory
@@ -58609,7 +58609,7 @@ exports = module.exports = __webpack_require__(47)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -58627,6 +58627,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -58634,7 +58637,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: ['item'],
     data: function data() {
         return {
-            stories: []
+            stories: [],
+            notLoggedIn: false
         };
     },
 
@@ -58644,8 +58648,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             //TODO pagination
             axios.get('/items/stories/' + this.item.id).then(function (response) {
-                console.log(response.data);
-                _this.stories = response.data;
+                if (response.data.isLoggedIn) {
+                    _this.stories = response.data.stories;
+                } else {
+                    _this.stories = response.data.stories.slice(0, 3);
+                    _this.notLoggedIn = true;
+                }
             });
         }
     },
@@ -58666,9 +58674,20 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(_vm.stories, function(story) {
-      return _c("story", { key: story.id, attrs: { story: story } })
-    })
+    [
+      _vm._l(_vm.stories, function(story) {
+        return _c("story", { key: story.id, attrs: { story: story } })
+      }),
+      _vm._v(" "),
+      _vm.notLoggedIn
+        ? _c("div", [
+            _c("h4", { staticClass: "text-warning" }, [
+              _vm._v(" Log In to see more stories")
+            ])
+          ])
+        : _vm._e()
+    ],
+    2
   )
 }
 var staticRenderFns = []
