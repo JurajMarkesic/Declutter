@@ -19,7 +19,8 @@
         <div v-if="isUsersStory">
             <div v-if="isEdited">
                 <button class="btn btn-success" @click="edit">Edit</button>
-                <button class="btn btn-danger" @click="isEdited = false">Cancel</button>
+                <button class="btn btn-danger" @click="del">Delete</button>
+                <button class="btn btn-warning" @click="isEdited = false">Cancel</button>
             </div>
             <button v-else @click="isEdited = true" class="btn btn-info">Edit</button>
         </div>
@@ -65,6 +66,12 @@
                     this.isEdited = false;
                     eventBus.$emit('story-added');
                 })
+            },
+            del() {
+                axios.delete('/stories/' + this.story.id)
+                    .then(() => {
+                        eventBus.$emit('story-deleted');
+                    })
             }
         },
         mounted() {

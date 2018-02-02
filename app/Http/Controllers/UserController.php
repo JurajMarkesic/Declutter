@@ -16,4 +16,18 @@ class UserController extends Controller
 
         return response()->json(['user' => $user, 'isUsersStory' => $isUsersStory]);
     }
+
+    public function profile($id)
+    {
+        $user = User::findOrFail($id);
+
+
+        $isUser = $user == Auth::user();
+
+        $user->stories;
+
+        $isPublic = $user->public;
+
+        return view('userprofile', compact('user', 'isUser', 'isPublic'));
+    }
 }

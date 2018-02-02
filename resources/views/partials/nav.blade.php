@@ -16,12 +16,14 @@
                     <li class="nav-item"><a href="{{ route('register') }}" class="nav-link">Register</a></li>
                 @else
                     @include('partials.search')
+                    <li class="nav-item"><a href="/home" class="nav-link">Home</a></li>
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
                             {{ Auth::user()->name }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                            <a href="/profile/{{Auth::id()}}" class="dropdown-item">Profile</a>
                             <a href="{{ route('logout') }}" class="dropdown-item"
                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                 Logout
@@ -31,6 +33,7 @@
                                   style="display: none;">
                                 {{ csrf_field() }}
                             </form>
+
                         </div>
                     </li>
                 @endif

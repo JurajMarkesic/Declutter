@@ -21,6 +21,7 @@ class CreateStoriesTable extends Migration
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
             $table->text('body');
             $table->float('cost')->unsigned();
+            $table->boolean('hidden')->default(false);
             $table->timestamps();
         });
     }

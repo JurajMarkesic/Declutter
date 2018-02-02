@@ -1,6 +1,6 @@
 <template>
     <div>
-        <img v-if="!noImage" :src="imagePath" alt="item image">
+        <img :src="imagePath" alt="item image">
         <h1>{{ item.name }}</h1>
     </div>
 </template>
@@ -12,14 +12,11 @@
         ],
         data() {
             return {
-                noImage: false
+
             }
         },
         computed: {
             imagePath() {
-                if(this.item.image === 'placeholder.jpg') {
-                    this.noImage = true;
-                }
                 return '/storage/uploads/' + this.item.image;
             }
         }

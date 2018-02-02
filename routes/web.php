@@ -28,3 +28,5 @@ Route::resource('/stories', 'StoryController');
 Route::get('/getuser/{id}', 'UserController@getUserById');
 
 Route::get('/search', 'SearchController@searchItems');
+
+Route::get('/profile/{id}', 'UserController@profile');

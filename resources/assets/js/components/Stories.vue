@@ -1,8 +1,5 @@
 <template>
     <div>
-        <create-story :item_id="item.id"></create-story>
-
-
         <story v-for="story in stories" :story="story" :key="story.id"></story>
     </div>
 </template>
@@ -31,6 +28,7 @@
         created() {
             this.fetch();
             eventBus.$on('story-added', this.fetch);
+            eventBus.$on('story-deleted', this.fetch);
         }
     }
 </script>

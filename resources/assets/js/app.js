@@ -21,6 +21,12 @@ Vue.component('stories', require('./components/Stories.vue'));
 Vue.component('create-story', require('./components/CreateStory.vue'));
 Vue.component('search-results', require('./components/SearchResults.vue'));
 Vue.component('result', require('./components/Result.vue'));
+Vue.component('profile', require('./components/Profile.vue'));
+Vue.component('user-profile', require('./components/UserProfile.vue'));
+Vue.component('edit-profile', require('./components/EditProfile.vue'));
+Vue.component('user-story', require('./components/UserStory.vue'));
+Vue.component('user-stories', require('./components/UserStories.vue'));
+
 
 
 export const eventBus = new Vue();
