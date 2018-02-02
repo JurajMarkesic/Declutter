@@ -26,6 +26,10 @@ Vue.component('user-profile', require('./components/UserProfile.vue'));
 Vue.component('edit-profile', require('./components/EditProfile.vue'));
 Vue.component('user-story', require('./components/UserStory.vue'));
 Vue.component('user-stories', require('./components/UserStories.vue'));
+Vue.component('followers', require('./components/Followers.vue'));
+Vue.component('followings', require('./components/Followings.vue'));
+Vue.component('tiny-followee', require('./components/TinyFollowee.vue'));
+Vue.component('tiny-follower', require('./components/TinyFollower.vue'));
 
 
 

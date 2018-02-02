@@ -1,13 +1,9 @@
 <template>
     <div>
-        <button :class="{'btn': true, 'btn-primary': !isFollowing, 'btn-secondary': isFollowing}" @click="follow">Follow</button>
-        <br>
-
         <img :src="imagePath" alt="user avatar">
-        <h3>{{ user.name }}</h3>
-        <p class="mb-5">{{ user.bio }}</p>
-
-        <user-stories :stories="user.stories"></user-stories>
+        <h4>{{user.name}}</h4>
+        <button v-if="following" class="btn btn-primary" @click="followToggle">Unfollow</button>
+        <button v-else class="btn btn-primary" @click="followToggle">Follow</button>
     </div>
 </template>
 
@@ -18,20 +14,20 @@
         ],
         data() {
             return {
-                isFollowing: false
+                following: false
             }
         },
         methods: {
-            follow() {
+            followToggle() {
                 axios.get('/profile/' + this.user.id + '/follow')
-                    .then(() => {
-                        this.isFollowing = !this.isFollowing;
+                    .then((response) => {
+                        this.following = response.data.following;
                     })
             },
-            checkIfFollowing() {
+            checkFollow() {
                 axios.get('/profile/' + this.user.id + '/check')
                     .then((response) => {
-                        this.isFollowing = response.data.isFollowing;
+                        this.following = response.data.isFollowing;
                     })
             }
         },
@@ -41,14 +37,14 @@
             }
         },
         created() {
-            this.checkIfFollowing();
+            this.checkFollow();
         }
     }
 </script>
 
 <style>
     img {
-        height: 80px;
+        height: 50px;
         border-radius: 50%;
     }
 </style>

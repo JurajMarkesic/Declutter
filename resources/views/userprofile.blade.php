@@ -5,7 +5,7 @@
         <user-profile :user="{{$user}}"></user-profile>
     @else
         @if($isPublic)
-            {{--<profile :user="{{$user}}"></profile>--}}
+            <profile :user="{{$user}}"></profile>
         @else
             <h3>This profile is private.</h3>
         @endif

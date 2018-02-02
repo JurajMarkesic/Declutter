@@ -26,6 +26,8 @@ class UserController extends Controller
         $isUser = $user == Auth::user();
 
         $user->stories;
+        $user->followers;
+        $user->followings;
 
         $isPublic = $user->public;
 
@@ -97,5 +99,59 @@ class UserController extends Controller
 
         return redirect()->back()->with("success","Password changed successfully !");
 
+    }
+
+    public function toggleFollow($id)
+    {
+        $followee = User::findOrFail($id);
+
+        $follower = Auth::user();
+
+        if($follower->followings->contains($followee)) {
+            $follower->followings()->detach($followee->id);
+            $following = false;
+        } else {
+            $follower->followings()->attach($followee->id);
+            $following = true;
+        }
+
+        return response()->json([
+           'following' => $following
+        ]);
+    }
+
+    public function checkFollow($id)
+    {
+        $followee = User::findOrFail($id);
+
+        $follower = Auth::user();
+
+        if($follower->followings->contains($followee)) {
+            $isFollowing = true;
+        } else {
+            $isFollowing = false;
+        }
+
+        return response()->json([
+                'isFollowing' => $isFollowing
+            ]);
+    }
+
+    public function getFollowers()
+    {
+        $user = Auth::user();
+
+        $followers = $user->followers()->get();
+
+        return view('followers')->with('followers',$followers);
+    }
+
+    public function getFollowings()
+    {
+        $user = Auth::user();
+
+        $followings = $user->followings()->get();
+
+        return view('followings')->with('followings', $followings);
     }
 }

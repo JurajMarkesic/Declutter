@@ -31,6 +31,14 @@ Route::get('/search', 'SearchController@searchItems');
 
 Route::get('/profile/edit','UserController@edit');
 
+Route::get('/profile/{id}/follow', 'UserController@toggleFollow');
+
+Route::get('/profile/followers', 'UserController@getFollowers');
+
+Route::get('/profile/followings', 'UserController@getFollowings');
+
+Route::get('/profile/{id}/check', 'UserController@checkFollow');
+
 Route::get('/profile/{id}', 'UserController@profile');
 
 Route::patch('/profile', 'UserController@update');
@@ -38,3 +46,5 @@ Route::patch('/profile', 'UserController@update');
 Route::get('/changePassword','UserController@showChangePasswordForm');
 
 Route::post('/changePassword','UserController@changePassword');
+
+

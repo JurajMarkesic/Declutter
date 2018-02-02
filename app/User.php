@@ -24,4 +24,15 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Story');
     }
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'followee_id', 'follower_id')->withTimestamps();
+    }
+
+
+    public function followings()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'followee_id')->withTimestamps();
+    }
 }
