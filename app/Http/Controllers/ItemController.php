@@ -21,6 +21,7 @@ class ItemController extends Controller
         $this->validate($request, [
             'image' => 'image|mimes:jpeg,png,jpg,svg|max:2048',
             'name' => 'required|max:30',
+            'category' => 'required|numeric'
         ]);
 
         $item = new Item;
@@ -38,6 +39,8 @@ class ItemController extends Controller
         }
 
         $item->name = $request->input('name');
+
+        $item->category_id = $request->input('category');
 
         $item->save();
 

@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->boolean('public')->default(true);
             $table->string('image')->default('placeholderAvatar.jpg');
             $table->text('bio')->nullable();
+            $table->integer('declutters')->default(0)->unsigned();
             $table->rememberToken();
             $table->timestamps();
         });
