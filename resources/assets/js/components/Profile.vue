@@ -1,6 +1,7 @@
 <template>
     <div>
-        <button :class="{'btn': true, 'btn-primary': !isFollowing, 'btn-secondary': isFollowing}" @click="follow">Follow</button>
+        <button v-if="isFollowing" class="btn btn-secondary" @click="followToggle">Unfollow</button>
+        <button v-else class="btn btn-primary" @click="followToggle">Follow</button>
         <br>
 
         <img :src="imagePath" alt="user avatar">
@@ -22,7 +23,7 @@
             }
         },
         methods: {
-            follow() {
+            followToggle() {
                 axios.get('/profile/' + this.user.id + '/follow')
                     .then(() => {
                         this.isFollowing = !this.isFollowing;

@@ -37,6 +37,8 @@ Route::get('/profile/followers', 'UserController@getFollowers');
 
 Route::get('/profile/followings', 'UserController@getFollowings');
 
+Route::get('/profile/visibility', 'UserController@toggleVisibility');
+
 Route::get('/profile/{id}/check', 'UserController@checkFollow');
 
 Route::get('/profile/{id}', 'UserController@profile');

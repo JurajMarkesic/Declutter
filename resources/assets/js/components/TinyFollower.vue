@@ -1,7 +1,7 @@
 <template>
     <div>
         <img :src="imagePath" alt="user avatar">
-        <h4>{{user.name}}</h4>
+        <a :href="'/profile/' + user.id"><h4>{{user.name}}</h4></a>
         <button v-if="following" class="btn btn-primary" @click="followToggle">Unfollow</button>
         <button v-else class="btn btn-primary" @click="followToggle">Follow</button>
     </div>

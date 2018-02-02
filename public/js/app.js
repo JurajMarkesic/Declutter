@@ -59511,7 +59511,7 @@ exports = module.exports = __webpack_require__(47)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -59537,12 +59537,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['user'],
     data: function data() {
         return {
-            isUpdated: false
+            bioUpdated: false,
+            isVisible: true
         };
     },
 
@@ -59553,9 +59562,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.patch('/profile', {
                 bio: this.user.bio
             }).then(function () {
-                _this.isUpdated = true;
+                _this.bioUpdated = true;
+            });
+        },
+        toggleVisibility: function toggleVisibility() {
+            var _this2 = this;
+
+            axios.get('/profile/visibility').then(function () {
+                _this2.isVisible = !_this2.isVisible;
             });
         }
+    },
+    created: function created() {
+        this.isVisible = this.user.public;
     }
 });
 
@@ -59598,11 +59617,40 @@ var render = function() {
     _vm._v(" "),
     _c("br"),
     _vm._v(" "),
-    _vm.isUpdated
+    _vm.bioUpdated
       ? _c("div", { staticClass: "alert alert-success" }, [
           _vm._v("\n        Bio updated!\n    ")
         ])
-      : _vm._e()
+      : _vm._e(),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c("label", [_vm._v("Profile Visibility:")]),
+    _c("br"),
+    _vm._v(" "),
+    _vm.isVisible
+      ? _c("h5", [_vm._v("Public")])
+      : _c("h5", [_vm._v("Private")]),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _vm.isVisible
+      ? _c(
+          "button",
+          {
+            staticClass: "btn btn-success",
+            on: { click: _vm.toggleVisibility }
+          },
+          [_vm._v("Make Private")]
+        )
+      : _c(
+          "button",
+          {
+            staticClass: "btn btn-success",
+            on: { click: _vm.toggleVisibility }
+          },
+          [_vm._v("Make Public")]
+        )
   ])
 }
 var staticRenderFns = [
@@ -59978,6 +60026,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['user'],
@@ -59988,7 +60037,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        follow: function follow() {
+        followToggle: function followToggle() {
             var _this = this;
 
             axios.get('/profile/' + this.user.id + '/follow').then(function () {
@@ -60024,18 +60073,20 @@ var render = function() {
   return _c(
     "div",
     [
-      _c(
-        "button",
-        {
-          class: {
-            btn: true,
-            "btn-primary": !_vm.isFollowing,
-            "btn-secondary": _vm.isFollowing
-          },
-          on: { click: _vm.follow }
-        },
-        [_vm._v("Follow")]
-      ),
+      _vm.isFollowing
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-secondary",
+              on: { click: _vm.followToggle }
+            },
+            [_vm._v("Unfollow")]
+          )
+        : _c(
+            "button",
+            { staticClass: "btn btn-primary", on: { click: _vm.followToggle } },
+            [_vm._v("Follow")]
+          ),
       _vm._v(" "),
       _c("br"),
       _vm._v(" "),
@@ -60468,7 +60519,9 @@ var render = function() {
     ? _c("div", [
         _c("img", { attrs: { src: _vm.imagePath, alt: "user avatar" } }),
         _vm._v(" "),
-        _c("h4", [_vm._v(_vm._s(_vm.user.name))]),
+        _c("a", { attrs: { href: "/profile/" + _vm.user.id } }, [
+          _c("h4", [_vm._v(_vm._s(_vm.user.name))])
+        ]),
         _vm._v(" "),
         _c(
           "button",
@@ -60640,7 +60693,9 @@ var render = function() {
   return _c("div", [
     _c("img", { attrs: { src: _vm.imagePath, alt: "user avatar" } }),
     _vm._v(" "),
-    _c("h4", [_vm._v(_vm._s(_vm.user.name))]),
+    _c("a", { attrs: { href: "/profile/" + _vm.user.id } }, [
+      _c("h4", [_vm._v(_vm._s(_vm.user.name))])
+    ]),
     _vm._v(" "),
     _vm.following
       ? _c(

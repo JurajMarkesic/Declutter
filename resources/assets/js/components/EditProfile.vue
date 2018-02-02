@@ -7,9 +7,17 @@
 
         <br>
 
-        <div v-if="isUpdated" class="alert alert-success">
+        <div v-if="bioUpdated" class="alert alert-success">
             Bio updated!
         </div>
+        <br>
+
+        <label>Profile Visibility:</label><br>
+        <h5 v-if="isVisible">Public</h5>
+        <h5 v-else>Private</h5>
+        <br>
+        <button v-if="isVisible" class="btn btn-success" @click="toggleVisibility">Make Private</button>
+        <button v-else class="btn btn-success" @click="toggleVisibility">Make Public</button>
     </div>
 </template>
 
@@ -20,7 +28,8 @@
         ],
         data() {
             return {
-                isUpdated: false
+                bioUpdated: false,
+                isVisible: true
             }
         },
         methods: {
@@ -28,9 +37,18 @@
                 axios.patch('/profile', {
                     bio: this.user.bio
                 }).then(() => {
-                    this.isUpdated = true;
+                    this.bioUpdated = true;
                 })
+            },
+            toggleVisibility() {
+                axios.get('/profile/visibility')
+                    .then(() => {
+                        this.isVisible = !this.isVisible;
+                    })
             }
+        },
+        created() {
+            this.isVisible = this.user.public;
         }
     }
 </script>

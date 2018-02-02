@@ -154,4 +154,18 @@ class UserController extends Controller
 
         return view('followings')->with('followings', $followings);
     }
+
+
+    public function toggleVisibility()
+    {
+        $user = Auth::user();
+
+        $user->public = !$user->public;
+
+        $user->update();
+
+        return response("Visibility changed.", 200);
+    }
+
+
 }

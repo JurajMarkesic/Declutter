@@ -1,7 +1,7 @@
 <template>
     <div v-if="!unfollowed">
         <img :src="imagePath" alt="user avatar">
-        <h4>{{user.name}}</h4>
+        <a :href="'/profile/' + user.id"><h4>{{user.name}}</h4></a>
         <button class="btn btn-primary" @click="unfollow">Unfollow</button>
     </div>
 </template>
