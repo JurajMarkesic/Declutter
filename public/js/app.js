@@ -59309,21 +59309,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['user'],
     data: function data() {
-        return {
-            isEdited: false
-        };
+        return {};
     },
 
-    methods: {},
+    methods: {
+        directToEdit: function directToEdit() {
+            window.location.href = '/profile/edit';
+        }
+    },
     computed: {
         imagePath: function imagePath() {
             return '/storage/uploads/' + this.user.image;
@@ -59342,34 +59339,16 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm.isEdited
-        ? _c("edit-profile")
-        : _c(
-            "div",
-            [
-              _c(
-                "button",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.isEdited = true
-                    }
-                  }
-                },
-                [_vm._v("Edit")]
-              ),
-              _c("br"),
-              _vm._v(" "),
-              _c("img", { attrs: { src: _vm.imagePath, alt: "user avatar" } }),
-              _vm._v(" "),
-              _c("h3", [_vm._v(_vm._s(_vm.user.name))]),
-              _vm._v(" "),
-              _c("p", { staticClass: "mb-5" }, [_vm._v(_vm._s(_vm.user.bio))]),
-              _vm._v(" "),
-              _c("user-stories", { attrs: { stories: _vm.user.stories } })
-            ],
-            1
-          )
+      _c("button", { on: { click: _vm.directToEdit } }, [_vm._v("Edit")]),
+      _c("br"),
+      _vm._v(" "),
+      _c("img", { attrs: { src: _vm.imagePath, alt: "user avatar" } }),
+      _vm._v(" "),
+      _c("h3", [_vm._v(_vm._s(_vm.user.name))]),
+      _vm._v(" "),
+      _c("p", { staticClass: "mb-5" }, [_vm._v(_vm._s(_vm.user.bio))]),
+      _vm._v(" "),
+      _c("user-stories", { attrs: { stories: _vm.user.stories } })
     ],
     1
   )
@@ -59470,7 +59449,7 @@ exports = module.exports = __webpack_require__(47)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -59485,8 +59464,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['user'],
+    data: function data() {
+        return {
+            isUpdated: false
+        };
+    },
+
+    methods: {
+        edit: function edit() {
+            var _this = this;
+
+            axios.patch('/profile', {
+                bio: this.user.bio
+            }).then(function () {
+                _this.isUpdated = true;
+            });
+        }
+    }
+});
 
 /***/ }),
 /* 99 */
@@ -59496,9 +59505,52 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("textarea", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.user.bio,
+          expression: "user.bio"
+        }
+      ],
+      staticClass: "form-control",
+      attrs: { cols: "30", rows: "10" },
+      domProps: { value: _vm.user.bio },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.user, "bio", $event.target.value)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("button", { staticClass: "btn btn-success", on: { click: _vm.edit } }, [
+      _vm._v("Edit")
+    ]),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _vm.isUpdated
+      ? _c("div", { staticClass: "alert alert-success" }, [
+          _vm._v("\n        Bio updated!\n    ")
+        ])
+      : _vm._e()
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [_c("h4", [_vm._v("Edit Bio:")])])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

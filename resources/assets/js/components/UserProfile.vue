@@ -1,17 +1,12 @@
 <template>
     <div>
+        <button @click="directToEdit">Edit</button><br>
 
-        <edit-profile v-if="isEdited"></edit-profile>
+        <img :src="imagePath" alt="user avatar">
+        <h3>{{ user.name }}</h3>
+        <p class="mb-5">{{ user.bio }}</p>
 
-        <div v-else>
-            <button @click="isEdited = true">Edit</button><br>
-
-            <img :src="imagePath" alt="user avatar">
-            <h3>{{ user.name }}</h3>
-            <p class="mb-5">{{ user.bio }}</p>
-
-            <user-stories :stories="user.stories"></user-stories>
-        </div>
+        <user-stories :stories="user.stories"></user-stories>
     </div>
 </template>
 
@@ -22,11 +17,13 @@
         ],
         data() {
             return {
-                isEdited: false
+
             }
         },
         methods: {
-
+            directToEdit() {
+                window.location.href = '/profile/edit';
+            }
         },
         computed: {
             imagePath() {
