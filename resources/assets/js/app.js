@@ -30,6 +30,10 @@ Vue.component('followers', require('./components/Followers.vue'));
 Vue.component('followings', require('./components/Followings.vue'));
 Vue.component('tiny-followee', require('./components/TinyFollowee.vue'));
 Vue.component('tiny-follower', require('./components/TinyFollower.vue'));
+Vue.component('admin', require('./components/Admin.vue'));
+Vue.component('category', require('./components/Category.vue'))
+Vue.component('category-items', require('./components/CategoryItems.vue'));
+Vue.component('category-item', require('./components/CategoryItem.vue'));
 
 
 

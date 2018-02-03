@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Item;
+use App\Category;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -12,7 +13,9 @@ class ItemController extends Controller
 
     public function create()
     {
-        return view('createItem');
+        $categories = Category::all();
+
+        return view('createItem')->with('categories', $categories);
     }
 
 

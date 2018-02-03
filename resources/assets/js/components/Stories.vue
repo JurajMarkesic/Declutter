@@ -1,8 +1,8 @@
 <template>
     <div>
         <story v-for="story in stories" :story="story" :key="story.id"></story>
-        <div v-if="notLoggedIn">
-           <h4 class="text-warning"> Log In to see more stories</h4>
+        <div v-if="shouldOfferSignup">
+           <h4 class="text-warning"> Signup to see more stories!</h4>
         </div>
     </div>
 </template>
@@ -32,6 +32,11 @@
                         }
                     })
             }
+        },
+        computed: {
+          shouldOfferSignup() {
+              return (this.notLoggedIn) && (this.stories.length === 3);
+          }
         },
         created() {
             this.fetch();

@@ -168,4 +168,8 @@ class UserController extends Controller
     }
 
 
+    public function showAdmin()
+    {
+        return view('admin');
+    }
 }

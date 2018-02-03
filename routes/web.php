@@ -49,4 +49,8 @@ Route::get('/changePassword','UserController@showChangePasswordForm');
 
 Route::post('/changePassword','UserController@changePassword');
 
+Route::resource('/categories', 'CategoryController');
+
+Route::get('/admin', 'UserController@showAdmin');
+
 

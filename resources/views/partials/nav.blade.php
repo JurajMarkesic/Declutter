@@ -10,6 +10,19 @@
 
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav">
+
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Category
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                        @foreach($categories as $category)
+                            <a href="/categories/{{$category->id}}" class="dropdown-item">{{ $category->name }}</a>
+                        @endforeach
+                    </div>
+                </li>
+                
                 @if (Auth::guest())
                     @include('partials.search')
                     <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Login</a></li>
