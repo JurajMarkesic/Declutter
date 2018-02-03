@@ -35,4 +35,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class, 'followers', 'follower_id', 'followee_id')->withTimestamps();
     }
+
+    public function decluttered()
+    {
+        return $this->belongsToMany('App\Item', 'declutters', 'user_id', 'item_id')->withTimestamps();
+    }
 }

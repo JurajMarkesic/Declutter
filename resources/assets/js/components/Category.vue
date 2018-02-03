@@ -1,7 +1,8 @@
 <template>
     <div>
-        <p>{{ category.name }}</p>
+        <span>{{ category.name }}</span>
         <button class="btn btn-danger" @click="remove">Remove</button>
+        <br><br>
     </div>
 </template>
 

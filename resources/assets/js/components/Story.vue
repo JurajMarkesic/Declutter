@@ -72,6 +72,11 @@
                     .then(() => {
                         eventBus.$emit('story-deleted');
                     })
+
+                axios.get('/items/undoDeclutter/' + this.story.item_id)
+                    .then(() => {
+                        eventBus.$emit('item-recluttered');
+                    })
             }
         },
         mounted() {

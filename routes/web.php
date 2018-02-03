@@ -21,6 +21,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/items/stories/{item}', 'ItemController@stories');
 
+Route::get('/items/declutter/{item}', 'ItemController@declutter');
+
+Route::get('/items/check/{item}', 'ItemController@checkDeclutter');
+
+Route::get('/items/undoDeclutter/{item}', 'ItemController@undoDeclutter');
+
 Route::resource('/items', 'ItemController');
 
 Route::resource('/stories', 'StoryController');
@@ -51,6 +57,6 @@ Route::post('/changePassword','UserController@changePassword');
 
 Route::resource('/categories', 'CategoryController');
 
-Route::get('/admin', 'UserController@showAdmin');
+Route::get('/admin', 'UserController@showAdmin')->middleware('admin');
 
 

@@ -63,12 +63,65 @@ class ItemController extends Controller
 
         $isLoggedIn = Auth::check();
 
+        $alreadyPosted = false;
+
+        foreach($stories as $story) {
+            if($story->user_id == Auth::id()) {
+                $alreadyPosted = true;
+            }
+        }
+
         return response()->json([
            'stories' => $stories,
-           'isLoggedIn' => $isLoggedIn
+           'isLoggedIn' => $isLoggedIn,
+            'alreadyPosted' => $alreadyPosted
         ]);
     }
 
+    public function declutter(Item $item)
+    {
+        $user = Auth::user();
+
+        $user->declutters++;
+
+        $item->declutters++;
+
+        $user->update();
+        $item->update();
+
+        $user->decluttered()->attach($item->id);
+
+        return response("Item declutterd.", 200);
+    }
+
+    public function undoDeclutter(Item $item)
+    {
+        $user = Auth::user();
+
+        $user->declutters--;
+
+        $item->declutters--;
+
+        $user->update();
+        $item->update();
+
+        $user->decluttered()->detach($item->id);
+
+        return response("Item declutter undid.", 200);
+    }
+
+    public function checkDeclutter(Item $item)
+    {
+        if(Auth::user()->decluttered->contains($item)) {
+            $isDecluttered = true;
+        } else {
+            $isDecluttered = false;
+        }
+
+        return response()->json([
+            'isDecluttered' => $isDecluttered
+        ]);
+    }
 
 //    public function edit(Item $item)
 //    {

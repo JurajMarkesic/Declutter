@@ -26,6 +26,9 @@
                     .then((response) => {
                         if(response.data.isLoggedIn) {
                             this.stories = response.data.stories;
+                            if(response.data.alreadyPosted) {
+                                eventBus.$emit('has-story');
+                            }
                         }else {
                             this.stories = response.data.stories.slice(0,3);
                             this.notLoggedIn = true;

@@ -39,6 +39,10 @@ Vue.component('category-item', require('./components/CategoryItem.vue'));
 
 export const eventBus = new Vue();
 
+// export const store = {
+//
+// };
+
 const app = new Vue({
     el: '#app'
 });

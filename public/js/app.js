@@ -865,6 +865,10 @@ Vue.component('category-item', __webpack_require__(139));
 
 var eventBus = new Vue();
 
+// export const store = {
+//
+// };
+
 var app = new Vue({
   el: '#app'
 });
@@ -58159,6 +58163,13 @@ module.exports = function listToStyles (parentId, list) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_js__ = __webpack_require__(5);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -58167,16 +58178,83 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['item'],
     data: function data() {
-        return {};
+        return {
+            isDecluttered: false,
+            noStory: true,
+            declutters: this.item.declutters
+        };
     },
 
     computed: {
         imagePath: function imagePath() {
             return '/storage/uploads/' + this.item.image;
+        },
+        avgCost: function avgCost() {
+            var count = this.item.stories.length;
+
+            var totalCost = 0;
+
+            this.item.stories.forEach(function (story) {
+                totalCost += story.cost;
+            });
+
+            return totalCost / count;
         }
+    },
+    methods: {
+        declutter: function declutter() {
+            var _this = this;
+
+            axios.get('/items/declutter/' + this.item.id).then(function () {
+                _this.isDecluttered = true;
+                _this.declutters++;
+                __WEBPACK_IMPORTED_MODULE_0__app_js__["eventBus"].$emit('item-decluttered');
+            });
+        },
+        undoDeclutter: function undoDeclutter() {
+            var _this2 = this;
+
+            axios.get('/items/undoDeclutter/' + this.item.id).then(function () {
+                _this2.isDecluttered = false;
+                _this2.declutters--;
+                __WEBPACK_IMPORTED_MODULE_0__app_js__["eventBus"].$emit('item-recluttered');
+            });
+        },
+        checkDeclutter: function checkDeclutter() {
+            var _this3 = this;
+
+            axios.get('/items/check/' + this.item.id).then(function (response) {
+                _this3.isDecluttered = response.data.isDecluttered;
+            });
+        }
+    },
+    created: function created() {
+        var _this4 = this;
+
+        this.checkDeclutter();
+
+        __WEBPACK_IMPORTED_MODULE_0__app_js__["eventBus"].$on('item-decluttered', function () {
+            _this4.isDecluttered = true;
+        });
+
+        __WEBPACK_IMPORTED_MODULE_0__app_js__["eventBus"].$on('has-story', function () {
+            _this4.noStory = false;
+        });
+
+        __WEBPACK_IMPORTED_MODULE_0__app_js__["eventBus"].$on('story-added', function () {
+            _this4.declutters++;
+        });
+
+        __WEBPACK_IMPORTED_MODULE_0__app_js__["eventBus"].$on('story-deleted', function () {
+            _this4.noStory = true;
+            _this4.isDecluttered = false;
+            _this4.declutters--;
+        });
     }
 });
 
@@ -58191,7 +58269,35 @@ var render = function() {
   return _c("div", [
     _c("img", { attrs: { src: _vm.imagePath, alt: "item image" } }),
     _vm._v(" "),
-    _c("h1", [_vm._v(_vm._s(_vm.item.name))])
+    _c("h1", [_vm._v(_vm._s(_vm.item.name))]),
+    _vm._v(" "),
+    _c("h3", [_vm._v("Declutters: " + _vm._s(_vm.declutters))]),
+    _vm._v(" "),
+    _vm.avgCost
+      ? _c("h3", [_vm._v("Average cost: " + _vm._s(_vm.avgCost))])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.noStory
+      ? _c("div", [
+          _vm.isDecluttered
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-danger",
+                  on: { click: _vm.undoDeclutter }
+                },
+                [_vm._v("Undo")]
+              )
+            : _c(
+                "button",
+                {
+                  staticClass: "btn btn-success",
+                  on: { click: _vm.declutter }
+                },
+                [_vm._v("Declutter")]
+              )
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -58290,7 +58396,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -58376,6 +58482,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         del: function del() {
             axios.delete('/stories/' + this.story.id).then(function () {
                 __WEBPACK_IMPORTED_MODULE_0__app_js__["eventBus"].$emit('story-deleted');
+            });
+
+            axios.get('/items/undoDeclutter/' + this.story.item_id).then(function () {
+                __WEBPACK_IMPORTED_MODULE_0__app_js__["eventBus"].$emit('item-recluttered');
             });
         }
     },
@@ -58599,7 +58709,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -58640,6 +58750,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('/items/stories/' + this.item.id).then(function (response) {
                 if (response.data.isLoggedIn) {
                     _this.stories = response.data.stories;
+                    if (response.data.alreadyPosted) {
+                        __WEBPACK_IMPORTED_MODULE_0__app_js__["eventBus"].$emit('has-story');
+                    }
                 } else {
                     _this.stories = response.data.stories.slice(0, 3);
                     _this.notLoggedIn = true;
@@ -58781,7 +58894,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -58813,7 +58926,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             body: '',
-            cost: ''
+            cost: '',
+            notDecluttered: false
         };
     },
 
@@ -58827,7 +58941,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(response.data);
                 __WEBPACK_IMPORTED_MODULE_0__app_js__["eventBus"].$emit('story-added');
             });
+
+            axios.get('/items/declutter/' + this.item_id).then(function () {
+                __WEBPACK_IMPORTED_MODULE_0__app_js__["eventBus"].$emit('item-decluttered');
+            });
+        },
+        checkDeclutter: function checkDeclutter() {
+            var _this = this;
+
+            axios.get('/items/check/' + this.item_id).then(function (response) {
+                _this.notDecluttered = !response.data.isDecluttered;
+            });
         }
+    },
+    created: function created() {
+        var _this2 = this;
+
+        this.checkDeclutter();
+
+        __WEBPACK_IMPORTED_MODULE_0__app_js__["eventBus"].$on('item-decluttered', function () {
+            _this2.notDecluttered = false;
+        });
+
+        __WEBPACK_IMPORTED_MODULE_0__app_js__["eventBus"].$on('item-recluttered', function () {
+            _this2.notDecluttered = true;
+        });
     }
 });
 
@@ -58839,59 +58977,63 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("label", [_vm._v("Your Story:")]),
-    _vm._v(" "),
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.body,
-          expression: "body"
-        }
-      ],
-      staticClass: "form-control",
-      attrs: { type: "text" },
-      domProps: { value: _vm.body },
-      on: {
-        input: function($event) {
-          if ($event.target.composing) {
-            return
+  return _vm.notDecluttered
+    ? _c("div", [
+        _c("label", [_vm._v("Your Story:")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.body,
+              expression: "body"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text" },
+          domProps: { value: _vm.body },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.body = $event.target.value
+            }
           }
-          _vm.body = $event.target.value
-        }
-      }
-    }),
-    _vm._v(" "),
-    _c("label", [_vm._v("Approximate Cost:")]),
-    _vm._v(" "),
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.cost,
-          expression: "cost"
-        }
-      ],
-      staticClass: "form-control",
-      attrs: { type: "number" },
-      domProps: { value: _vm.cost },
-      on: {
-        input: function($event) {
-          if ($event.target.composing) {
-            return
+        }),
+        _vm._v(" "),
+        _c("label", [_vm._v("Approximate Cost:")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.cost,
+              expression: "cost"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "number" },
+          domProps: { value: _vm.cost },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.cost = $event.target.value
+            }
           }
-          _vm.cost = $event.target.value
-        }
-      }
-    }),
-    _vm._v("$\n\n    "),
-    _c("button", { staticClass: "btn btn-primary", on: { click: _vm.post } }, [
-      _vm._v("Post")
-    ])
-  ])
+        }),
+        _vm._v("$\n\n    "),
+        _c(
+          "button",
+          { staticClass: "btn btn-primary", on: { click: _vm.post } },
+          [_vm._v("Post")]
+        )
+      ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -61028,7 +61170,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -61040,6 +61182,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_js__ = __webpack_require__(5);
+//
 //
 //
 //
@@ -61070,11 +61213,14 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("p", [_vm._v(_vm._s(_vm.category.name))]),
+    _c("span", [_vm._v(_vm._s(_vm.category.name))]),
     _vm._v(" "),
     _c("button", { staticClass: "btn btn-danger", on: { click: _vm.remove } }, [
       _vm._v("Remove")
-    ])
+    ]),
+    _vm._v(" "),
+    _c("br"),
+    _c("br")
   ])
 }
 var staticRenderFns = []
