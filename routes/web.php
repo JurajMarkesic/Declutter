@@ -59,4 +59,6 @@ Route::resource('/categories', 'CategoryController');
 
 Route::get('/admin', 'UserController@showAdmin')->middleware('admin');
 
+Route::get('/top', 'ItemController@top');
+
 

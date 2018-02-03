@@ -67,7 +67,7 @@
         },
         created() {
             this.checkDeclutter();
-            
+
             eventBus.$on('item-decluttered', () => {
                 this.isDecluttered = true;
             });

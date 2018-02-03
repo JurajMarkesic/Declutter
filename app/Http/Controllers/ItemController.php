@@ -6,6 +6,7 @@ use App\Item;
 use App\Category;
 use Illuminate\Http\Request;
 use Auth;
+use DB;
 
 class ItemController extends Controller
 {
@@ -122,6 +123,99 @@ class ItemController extends Controller
             'isDecluttered' => $isDecluttered
         ]);
     }
+
+    public function top()
+    {
+        $declutters = DB::table('items')->orderBy('declutters', 'desc')->take(10)->get();
+
+
+        $items = Item::all();
+
+        $itemsCost = [];
+
+        foreach($items as $item) {
+            $stories = $item->stories()->get();
+
+            $count = $item->stories->count();
+
+            if(!$count) {
+                $itemAverage = [$item, 0];
+
+                array_push($itemsCost, $itemAverage);
+
+                continue;
+            }
+
+            $total = 0;
+
+            foreach($stories as $story) {
+                $total += $story->cost;
+            }
+
+            $average = $total / $count;
+
+            $itemAverage = [$item, $average];
+
+            array_push($itemsCost, $itemAverage);
+        }
+
+        $sorted = $this->quicksort($itemsCost);
+
+        $itemsByCost = array_slice($sorted, 0, 10);
+
+        return view('top', compact('itemsByCost', 'declutters'));
+    }
+
+    private function quicksort($array) //desc
+    {
+        // find array size
+        $length = count($array);
+
+        if($length <= 1){                                // base case test, if array of length 0 then just return array
+            return $array;
+        } else if($length <= 10) {                       //insertion sort under 10 items
+            for($i= 0; $i < count($array); $i++){
+                $val = $array[$i];                      //current item
+
+                $j = $i-1;                              //start loop on one item behind the current one
+
+                while($j>=0 && $array[$j][1] < $val[1]){         //stop loop when you reach item's place or the start of an array
+                    $array[$j+1] = $array[$j];                    //switch values
+
+                    $j--;
+                }
+
+                $array[$j+1] = $val;                //put value in it's current position, no items left off it are smaller
+            }
+
+            //return array back to be merged with the rest
+            return $array;
+        } else{
+
+            // select an item to act as our pivot point, since list is unsorted first position is easiest and you can
+            // choose to make the first item something that you suspect would have around median average cost.
+            // If it becomes a bottleneck use 3 pivots.
+            $pivot = $array[0];
+
+            // declare our two arrays to act as partitions
+            $left = $right = array();
+
+            // loop and compare each item in the array to the pivot value, place item in appropriate partition
+            for($i = 1; $i < count($array); $i++)
+            {
+                if($array[$i][1] > $pivot[1]){
+                    $left[] = $array[$i];
+                }
+                else{
+                    $right[] = $array[$i];
+                }
+            }
+
+            // use recursion to now sort the left and right lists
+            return array_merge($this->quicksort($left), array($pivot), $this->quicksort($right));
+        }
+    }
+
 
 //    public function edit(Item $item)
 //    {
