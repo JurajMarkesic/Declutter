@@ -36,6 +36,9 @@ Vue.component('category-items', require('./components/CategoryItems.vue'));
 Vue.component('category-item', require('./components/CategoryItem.vue'));
 Vue.component('top-declutter', require('./components/TopDeclutter.vue'));
 Vue.component('top-cost', require('./components/TopCost.vue'));
+Vue.component('timeline', require('./components/Timeline.vue'));
+Vue.component('timeline-item', require('./components/TimelineItem.vue'));
+
 
 
 export const eventBus = new Vue();

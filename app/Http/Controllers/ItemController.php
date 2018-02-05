@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ItemDecluttered;
 use App\Item;
 use App\Category;
 use Illuminate\Http\Request;
@@ -30,10 +31,10 @@ class ItemController extends Controller
 
         $item = new Item;
 
-        if($request->has('image')) {
+        if ($request->has('image')) {
             $image = $request->file('image');
 
-            $imageName = rand(1111, 9999). time() . '.' . $image->getClientOriginalExtension();
+            $imageName = rand(1111, 9999) . time() . '.' . $image->getClientOriginalExtension();
 
             $destinationPath = public_path('/storage/uploads/');
 
@@ -66,15 +67,15 @@ class ItemController extends Controller
 
         $alreadyPosted = false;
 
-        foreach($stories as $story) {
-            if($story->user_id == Auth::id()) {
+        foreach ($stories as $story) {
+            if ($story->user_id == Auth::id()) {
                 $alreadyPosted = true;
             }
         }
 
         return response()->json([
-           'stories' => $stories,
-           'isLoggedIn' => $isLoggedIn,
+            'stories' => $stories,
+            'isLoggedIn' => $isLoggedIn,
             'alreadyPosted' => $alreadyPosted
         ]);
     }
@@ -91,6 +92,8 @@ class ItemController extends Controller
         $item->update();
 
         $user->decluttered()->attach($item->id);
+
+//        event(new ItemDecluttered($item));
 
         return response("Item declutterd.", 200);
     }
@@ -113,7 +116,7 @@ class ItemController extends Controller
 
     public function checkDeclutter(Item $item)
     {
-        if(Auth::user()->decluttered->contains($item)) {
+        if (Auth::user()->decluttered->contains($item)) {
             $isDecluttered = true;
         } else {
             $isDecluttered = false;
@@ -133,12 +136,12 @@ class ItemController extends Controller
 
         $itemsCost = [];
 
-        foreach($items as $item) {
+        foreach ($items as $item) {
             $stories = $item->stories()->get();
 
             $count = $item->stories->count();
 
-            if(!$count) {
+            if (!$count) {
                 $itemAverage = [$item, 0];
 
                 array_push($itemsCost, $itemAverage);
@@ -148,7 +151,7 @@ class ItemController extends Controller
 
             $total = 0;
 
-            foreach($stories as $story) {
+            foreach ($stories as $story) {
                 $total += $story->cost;
             }
 
@@ -171,26 +174,26 @@ class ItemController extends Controller
         // find array size
         $length = count($array);
 
-        if($length <= 1){                                // base case test, if array of length 0 then just return array
+        if ($length <= 1) {                                // base case test, if array of length 0 then just return array
             return $array;
-        } else if($length <= 10) {                       //insertion sort under 10 items
-            for($i= 0; $i < count($array); $i++){
+        } else if ($length <= 10) {                       //insertion sort under 10 items
+            for ($i = 0; $i < count($array); $i++) {
                 $val = $array[$i];                      //current item
 
-                $j = $i-1;                              //start loop on one item behind the current one
+                $j = $i - 1;                              //start loop on one item behind the current one
 
-                while($j>=0 && $array[$j][1] < $val[1]){         //stop loop when you reach item's place or the start of an array
-                    $array[$j+1] = $array[$j];                    //switch values
+                while ($j >= 0 && $array[$j][1] < $val[1]) {         //stop loop when you reach item's place or the start of an array
+                    $array[$j + 1] = $array[$j];                    //switch values
 
                     $j--;
                 }
 
-                $array[$j+1] = $val;                //put value in it's current position, no items left off it are smaller
+                $array[$j + 1] = $val;                //put value in it's current position, no items left off it are smaller
             }
 
             //return array back to be merged with the rest
             return $array;
-        } else{
+        } else {
 
             // select an item to act as our pivot point, since list is unsorted first position is easiest and you can
             // choose to make the first item something that you suspect would have around median average cost.
@@ -201,12 +204,10 @@ class ItemController extends Controller
             $left = $right = array();
 
             // loop and compare each item in the array to the pivot value, place item in appropriate partition
-            for($i = 1; $i < count($array); $i++)
-            {
-                if($array[$i][1] > $pivot[1]){
+            for ($i = 1; $i < count($array); $i++) {
+                if ($array[$i][1] > $pivot[1]) {
                     $left[] = $array[$i];
-                }
-                else{
+                } else {
                     $right[] = $array[$i];
                 }
             }
@@ -216,48 +217,81 @@ class ItemController extends Controller
         }
     }
 
+    public function getFolloweeStories()  //should be cached and refreshed only when an event is fired that a followee wrote a story
+    {
+        $user = Auth::user();
 
-//    public function edit(Item $item)
-//    {
-//        //
-//    }
-//
-//
-//    public function update(Request $request, Item $item)
-//    {
-//        $this->validate($request, [
-//            'image' => 'image|mimes:jpeg,png,jpg,svg|max:2048',
-//            'name' => 'required|max:30',
-//        ]);
-//
-//        if($request->has('image')) {
-//            $image = $request->file('image');
-//
-//            $imageName = rand(1111, 9999). time() . '.' . $image->getClientOriginalExtension();
-//
-//            $destinationPath = public_path('/storage/uploads/');
-//
-//            $image->move($destinationPath, $imageName);
-//
-//            $item->image = $imageName;
-//        }
-//
-//        $item->name = $request->input('name');
-//
-//        $item->update();
-//
-//        return redirect('/items/' . $item->id);
-//    }
+        $followings = $user->followings()->with('stories')->get();
+
+        $storiesAll = array();
+
+        foreach($followings as $followee) {
+            $latestStories = $followee->stories()->latest()->take(10)->get();
+
+            foreach($latestStories as $stry) {
+                array_push($storiesAll, $stry);
+            }
+        }
+
+           $storiesAll = $this->quicksortByDate($storiesAll);
 
 
-//    public function destroy(Item $item)
-//    {
-//        try {
-//            $item->delete();
-//            return response("Item deleted.", 200);
-//        } catch (\Exception $e) {
-//            report($e);
-//            return response("Item could not be deleted.", 404);
-//        }
-//    }
+        $stories = array_slice($storiesAll, 0,15);
+
+        foreach($stories as $stry) {
+            $stry->load(['owner', 'item']); //horrible
+        }
+
+        return response()->json([
+            'stories' => $stories
+        ]);
+    }
+
+
+    private function quicksortByDate($array) {
+        // find array size
+        $length = count($array);
+
+        if ($length <= 1) {                                // base case test, if array of length 0 then just return array
+            return $array;
+        } else if ($length <= 10) {                       //insertion sort under 10 items
+            for ($i = 0; $i < count($array); $i++) {
+                $val = $array[$i];                      //current item
+
+                $j = $i - 1;                              //start loop on one item behind the current one
+
+                while ($j >= 0 && $array[$j]->created_at > $val->created_at) {         //stop loop when you reach item's place or the start of an array
+                    $array[$j + 1] = $array[$j];                    //switch values
+
+                    $j--;
+                }
+
+                $array[$j + 1] = $val;                //put value in it's current position, no items left off it are smaller
+            }
+
+            //return array back to be merged with the rest
+            return $array;
+        } else {
+
+            // select an item to act as our pivot point, since list is unsorted first position is easiest and you can
+            // choose to make the first item something that you suspect would have around median average cost.
+            // If it becomes a bottleneck use 3 pivots.
+            $pivot = $array[0];
+
+            // declare our two arrays to act as partitions
+            $left = $right = array();
+
+            // loop and compare each item in the array to the pivot value, place item in appropriate partition
+            for ($i = 1; $i < count($array); $i++) {
+                if ($array[$i]->created_at < $pivot->created_at) {
+                    $left[] = $array[$i];
+                } else {
+                    $right[] = $array[$i];
+                }
+            }
+
+            // use recursion to now sort the left and right lists
+            return array_merge($this->quicksort($left), array($pivot), $this->quicksort($right));
+        }
+    }
 }

@@ -35,6 +35,8 @@ Route::get('/getuser/{id}', 'UserController@getUserById');
 
 Route::get('/search', 'SearchController@searchItems');
 
+Route::post('/searchUser', 'UserController@searchUsers');
+
 Route::get('/profile/edit','UserController@edit');
 
 Route::get('/profile/{id}/follow', 'UserController@toggleFollow');
@@ -62,5 +64,9 @@ Route::resource('/categories', 'CategoryController');
 Route::get('/admin', 'UserController@showAdmin')->middleware('admin');
 
 Route::get('/top', 'ItemController@top');
+
+Route::get('/timeline/stories', 'ItemController@getFolloweeStories');
+
+Route::delete('/deleteUser/{user}', 'UserController@destroy');
 
 

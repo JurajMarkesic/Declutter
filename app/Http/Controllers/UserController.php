@@ -9,6 +9,17 @@ use Hash;
 
 class UserController extends Controller
 {
+
+    public function searchUsers(Request $request)
+    {
+        $query = $request->input('query');
+
+        $users = User::search($query)->get();
+
+        return response()->json([
+            'users' => $users
+        ]);
+    }
     public function getUserById($id)
     {
         $user = User::findOrFail($id);
@@ -179,5 +190,18 @@ class UserController extends Controller
             return true;
         }
         return false;
+    }
+
+    public function destroy(User $user)
+    {
+        try {
+            $user->delete();
+        } catch(\Exception $e) {
+            report($e);
+
+            return response("User not found.", 404);
+        }
+
+        return response("User deleted.", 200);
     }
 }

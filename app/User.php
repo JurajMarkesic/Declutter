@@ -4,11 +4,13 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Scout\Searchable;
 
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use Searchable;
 
     protected $fillable = [
         'name', 'email', 'password','image', 'declutters'
