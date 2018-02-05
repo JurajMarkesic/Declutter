@@ -3,8 +3,8 @@
         <p>{{ story.body }}</p>
         <p>{{ story.cost }}</p>
         <p>{{ story.created_at }}</p>
-        <button class="btn btn-danger" @click="del">Delete</button>
 
+        <button  v-if="isLogged" class="btn btn-danger" @click="del">Delete</button>
         <hr>
     </div>
 </template>
@@ -12,7 +12,7 @@
 <script>
     export default {
         props: [
-            'story'
+            'story', 'isLogged'
         ],
         data() {
             return {

@@ -172,4 +172,12 @@ class UserController extends Controller
     {
         return view('admin');
     }
+
+    public function checkLogIn(User $user)
+    {
+        if($user === Auth::user()) {
+            return true;
+        }
+        return false;
+    }
 }

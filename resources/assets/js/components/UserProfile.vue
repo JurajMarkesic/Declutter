@@ -10,7 +10,7 @@
         <h3>{{ user.name }}</h3>
         <p class="mb-5">{{ user.bio }}</p>
 
-        <user-stories :stories="user.stories"></user-stories>
+        <user-stories :stories="user.stories" :isLoggedIn="true"></user-stories>
     </div>
 </template>
 

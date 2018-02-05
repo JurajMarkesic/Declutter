@@ -34,7 +34,8 @@ Vue.component('admin', require('./components/Admin.vue'));
 Vue.component('category', require('./components/Category.vue'))
 Vue.component('category-items', require('./components/CategoryItems.vue'));
 Vue.component('category-item', require('./components/CategoryItem.vue'));
-
+Vue.component('top-declutter', require('./components/TopDeclutter.vue'));
+Vue.component('top-cost', require('./components/TopCost.vue'));
 
 
 export const eventBus = new Vue();
