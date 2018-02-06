@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <img :src="imagePath" alt="Item image">
-        <a :href="'/items/' + item.id"><h4>{{ item.name }}</h4></a>
+    <div class="row mb-4">
+        <img :src="imagePath" alt="Item image" class="col-4 col-md-2">
+        <a :href="'/items/' + item.id" class="display-4 ml-3 col-7">{{ item.name }}</a>
     </div>
 </template>
 
@@ -20,7 +20,7 @@
 
 <style>
     img {
-        height: 70px;
+        height: 80px;
         border-radius: 50%;
     }
 </style>

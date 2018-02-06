@@ -1,8 +1,7 @@
-<li class="nav-item">
-    <form action="/search" method="get" class="form form-inline">
+
+    <form action="/search" method="get" class="form form-inline col-12" id="searchForm">
         <div>
-            <input name="query" placeholder="Search...">
+            <input name="query" id="searchInput" placeholder="Search...">
         </div>
-        <button class="btn btn-dark" type=submit>Search</button>
+        <button id="searchButton" type=submit>SEARCH</button>
     </form>
-</li>

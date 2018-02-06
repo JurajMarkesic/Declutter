@@ -58123,7 +58123,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\nimg {\n    height: 80px;\n    border-radius: 50%;\n}\n", ""]);
+exports.push([module.i, "\n#imgWrap {\n    overflow: hidden;\n}\nimg {\n    display: block;\n    height: 240px;\n    width: auto;\n}\n@media (max-width: 768px) {\nimg {\n        height: 160px;\n}\n}\n\n\n", ""]);
 
 // exports
 
@@ -58168,6 +58168,12 @@ module.exports = function listToStyles (parentId, list) {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_js__ = __webpack_require__(4);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -58271,18 +58277,18 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("img", { attrs: { src: _vm.imagePath, alt: "item image" } }),
-    _vm._v(" "),
-    _c("h1", [_vm._v(_vm._s(_vm.item.name))]),
-    _vm._v(" "),
-    _c("h3", [_vm._v("Declutters: " + _vm._s(_vm.declutters))]),
-    _vm._v(" "),
-    _vm.avgCost
-      ? _c("h3", [_vm._v("Average cost: " + _vm._s(_vm.avgCost))])
-      : _vm._e(),
+    _c("div", { staticClass: "row mb-4" }, [
+      _c("div", { staticClass: "col-12 col-md-4", attrs: { id: "imgWrap" } }, [
+        _c("img", { attrs: { src: _vm.imagePath, alt: "item image" } })
+      ]),
+      _vm._v(" "),
+      _c("span", { staticClass: "display-3 col-11 col-md-7" }, [
+        _vm._v(_vm._s(_vm.item.name))
+      ])
+    ]),
     _vm._v(" "),
     _vm.noStory
-      ? _c("div", [
+      ? _c("div", { staticClass: "mb-5" }, [
           _vm.isDecluttered
             ? _c(
                 "button",
@@ -58300,6 +58306,18 @@ var render = function() {
                 },
                 [_vm._v("Declutter")]
               )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("h3", [
+      _vm._v("Declutters: "),
+      _c("b", [_vm._v(_vm._s(_vm.declutters))])
+    ]),
+    _vm._v(" "),
+    _vm.avgCost
+      ? _c("h3", [
+          _vm._v("Average cost: "),
+          _c("b", [_vm._v(_vm._s(_vm.avgCost))])
         ])
       : _vm._e()
   ])
@@ -58400,7 +58418,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\np {\n    word-break: break-all;\n}\n", ""]);
 
 // exports
 
@@ -58412,8 +58430,6 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_js__ = __webpack_require__(4);
-//
-//
 //
 //
 //
@@ -58511,11 +58527,9 @@ var render = function() {
   return _c("div", [
     _vm.isEdited
       ? _c("div", [
-          _c("p", [_vm._v(_vm._s(_vm.user.name))]),
+          _c("label", { staticClass: "lead" }, [_vm._v("Your Story:")]),
           _vm._v(" "),
-          _c("label", [_vm._v("Your Story:")]),
-          _vm._v(" "),
-          _c("input", {
+          _c("textarea", {
             directives: [
               {
                 name: "model",
@@ -58524,8 +58538,8 @@ var render = function() {
                 expression: "body"
               }
             ],
-            staticClass: "form-control",
-            attrs: { type: "text" },
+            staticClass: "form-control mb-3",
+            attrs: { rows: "3" },
             domProps: { value: _vm.body },
             on: {
               input: function($event) {
@@ -58537,7 +58551,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("label", [_vm._v("Approximate Cost:")]),
+          _c("label", { staticClass: "lead" }, [_vm._v("Approximate Cost:")]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -58548,8 +58562,8 @@ var render = function() {
                 expression: "cost"
               }
             ],
-            staticClass: "form-control",
-            attrs: { type: "number" },
+            staticClass: "form-control mb-2",
+            attrs: { type: "number", placeholder: "$" },
             domProps: { value: _vm.cost },
             on: {
               input: function($event) {
@@ -58559,15 +58573,19 @@ var render = function() {
                 _vm.cost = $event.target.value
               }
             }
-          }),
-          _vm._v("$\n    ")
+          })
         ])
       : _c("div", [
-          _c("p", [_vm._v(_vm._s(_vm.user.name))]),
+          _c("p", { staticClass: "font-weight-bold" }, [
+            _vm._v(_vm._s(_vm.user.name))
+          ]),
           _vm._v(" "),
           _c("p", [_vm._v(_vm._s(_vm.story.body))]),
           _vm._v(" "),
-          _c("p", [_vm._v("$" + _vm._s(_vm.story.cost))])
+          _c("p", [
+            _c("b", [_vm._v("Cost:")]),
+            _vm._v(" $" + _vm._s(_vm.story.cost))
+          ])
         ]),
     _vm._v(" "),
     _vm.isUsersStory
@@ -58982,10 +59000,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.notDecluttered
-    ? _c("div", [
-        _c("label", [_vm._v("Your Story:")]),
+    ? _c("div", { staticClass: "mt-4" }, [
+        _c("label", { staticClass: "lead" }, [_vm._v("Your Story:")]),
         _vm._v(" "),
-        _c("input", {
+        _c("textarea", {
           directives: [
             {
               name: "model",
@@ -58994,8 +59012,8 @@ var render = function() {
               expression: "body"
             }
           ],
-          staticClass: "form-control",
-          attrs: { type: "text" },
+          staticClass: "form-control mb-3",
+          attrs: { rows: "3" },
           domProps: { value: _vm.body },
           on: {
             input: function($event) {
@@ -59007,7 +59025,7 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _c("label", [_vm._v("Approximate Cost:")]),
+        _c("label", { staticClass: "lead" }, [_vm._v("Approximate Cost:")]),
         _vm._v(" "),
         _c("input", {
           directives: [
@@ -59018,8 +59036,8 @@ var render = function() {
               expression: "cost"
             }
           ],
-          staticClass: "form-control",
-          attrs: { type: "number" },
+          staticClass: "form-control col-11 col-sm-2",
+          attrs: { type: "number", placeholder: "$" },
           domProps: { value: _vm.cost },
           on: {
             input: function($event) {
@@ -59030,10 +59048,10 @@ var render = function() {
             }
           }
         }),
-        _vm._v("$\n\n    "),
+        _vm._v(" "),
         _c(
           "button",
-          { staticClass: "btn btn-primary", on: { click: _vm.post } },
+          { staticClass: "btn btn-primary mt-3", on: { click: _vm.post } },
           [_vm._v("Post")]
         )
       ])
@@ -59286,6 +59304,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['result'],
@@ -59310,12 +59330,20 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("img", { attrs: { src: _vm.imagePath, alt: "result image" } }),
-    _vm._v(" "),
-    _c("h1", [
-      _c("a", { attrs: { href: "/items/" + _vm.result.id } }, [
-        _vm._v(_vm._s(_vm.result.name))
-      ])
+    _c("div", { staticClass: "row mb-4" }, [
+      _c("img", {
+        staticClass: "col-4 col-md-2",
+        attrs: { src: _vm.imagePath, alt: "result image" }
+      }),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "display-4 ml-3 col-7",
+          attrs: { href: "/items/" + _vm.result.id }
+        },
+        [_vm._v(_vm._s(_vm.result.name))]
+      )
     ])
   ])
 }
@@ -59415,7 +59443,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\nimg {\n    height: 80px;\n    border-radius: 50%;\n}\n", ""]);
+exports.push([module.i, "\nimg {\n    height: 130px;\n    border-radius: 50%;\n}\n.username {\n    font-size: 2.8rem;\n}\n", ""]);
 
 // exports
 
@@ -59426,6 +59454,8 @@ exports.push([module.i, "\nimg {\n    height: 80px;\n    border-radius: 50%;\n}\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -59490,7 +59520,7 @@ var render = function() {
         ? _c(
             "button",
             {
-              staticClass: "btn btn-secondary",
+              staticClass: "btn btn-secondary mb-3",
               on: { click: _vm.followToggle }
             },
             [_vm._v("Unfollow")]
@@ -59503,13 +59533,22 @@ var render = function() {
       _vm._v(" "),
       _c("br"),
       _vm._v(" "),
-      _c("img", { attrs: { src: _vm.imagePath, alt: "user avatar" } }),
-      _vm._v(" "),
-      _c("h3", [_vm._v(_vm._s(_vm.user.name))]),
+      _c("div", { staticClass: "row mt-5" }, [
+        _c("img", {
+          staticClass: " col-12 col-md-3",
+          attrs: { src: _vm.imagePath, alt: "user avatar" }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "username ml-5 col-11 col-md-7" }, [
+          _vm._v(_vm._s(_vm.user.name))
+        ])
+      ]),
       _vm._v(" "),
       _c("p", { staticClass: "mb-5" }, [_vm._v(_vm._s(_vm.user.bio))]),
       _vm._v(" "),
-      _c("user-stories", { attrs: { stories: _vm.user.stories } })
+      _c("user-stories", {
+        attrs: { stories: _vm.user.stories, user: _vm.user }
+      })
     ],
     1
   )
@@ -59610,7 +59649,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\nimg {\n    height: 80px;\n    border-radius: 50%;\n}\n", ""]);
+exports.push([module.i, "\nimg {\n    height: 130px;\n    border-radius: 50%;\n}\n", ""]);
 
 // exports
 
@@ -59621,6 +59660,13 @@ exports.push([module.i, "\nimg {\n    height: 80px;\n    border-radius: 50%;\n}\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -59673,25 +59719,52 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("button", { on: { click: _vm.directToEdit } }, [_vm._v("Edit")]),
+      _c(
+        "button",
+        {
+          staticClass: "float-right btn btn-primary mt-4",
+          on: { click: _vm.directToEdit }
+        },
+        [_vm._v("Edit profile")]
+      ),
       _c("br"),
       _vm._v(" "),
-      _c("a", { attrs: { href: "/profile/followers" } }, [
-        _c("h4", [_vm._v("Followers: " + _vm._s(_vm.followerCount))])
+      _c("ul", { staticClass: "nav nav-tabs" }, [
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            { staticClass: "nav-link ", attrs: { href: "/profile/followers" } },
+            [_vm._v("Followers: " + _vm._s(_vm.followerCount))]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link ",
+              attrs: { href: "/profile/followings" }
+            },
+            [_vm._v("Following: " + _vm._s(_vm.followingCount))]
+          )
+        ])
       ]),
       _vm._v(" "),
-      _c("a", { attrs: { href: "/profile/followings" } }, [
-        _c("h4", [_vm._v("Following: " + _vm._s(_vm.followingCount))])
+      _c("div", { staticClass: "row mt-5" }, [
+        _c("img", {
+          staticClass: " col-12 col-md-3",
+          attrs: { src: _vm.imagePath, alt: "user avatar" }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "display-4 ml-5 col-11 col-md-7" }, [
+          _vm._v(_vm._s(_vm.user.name))
+        ])
       ]),
-      _vm._v(" "),
-      _c("img", { attrs: { src: _vm.imagePath, alt: "user avatar" } }),
-      _vm._v(" "),
-      _c("h3", [_vm._v(_vm._s(_vm.user.name))]),
       _vm._v(" "),
       _c("p", { staticClass: "mb-5" }, [_vm._v(_vm._s(_vm.user.bio))]),
       _vm._v(" "),
       _c("user-stories", {
-        attrs: { stories: _vm.user.stories, isLoggedIn: true }
+        attrs: { stories: _vm.user.stories, isLoggedIn: true, user: _vm.user }
       })
     ],
     1
@@ -59881,7 +59954,7 @@ var render = function() {
         }
       ],
       staticClass: "form-control",
-      attrs: { cols: "30", rows: "10" },
+      attrs: { rows: "7" },
       domProps: { value: _vm.user.bio },
       on: {
         input: function($event) {
@@ -59893,21 +59966,23 @@ var render = function() {
       }
     }),
     _vm._v(" "),
-    _c("button", { staticClass: "btn btn-success", on: { click: _vm.edit } }, [
-      _vm._v("Edit")
-    ]),
+    _c(
+      "button",
+      { staticClass: "btn btn-success mt-2", on: { click: _vm.edit } },
+      [_vm._v("Edit")]
+    ),
     _vm._v(" "),
     _c("br"),
     _vm._v(" "),
     _vm.bioUpdated
-      ? _c("div", { staticClass: "alert alert-success" }, [
+      ? _c("div", { staticClass: "alert alert-success mt-2" }, [
           _vm._v("\n        Bio updated!\n    ")
         ])
       : _vm._e(),
     _vm._v(" "),
     _c("br"),
     _vm._v(" "),
-    _c("label", [_vm._v("Profile Visibility:")]),
+    _c("label", { staticClass: "mt-4 lead" }, [_vm._v("Profile Visibility:")]),
     _c("br"),
     _vm._v(" "),
     _vm.isVisible
@@ -59940,7 +60015,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", [_c("h4", [_vm._v("Edit Bio:")])])
+    return _c("label", { staticClass: "mt-4" }, [
+      _c("h4", [_vm._v("Edit Bio:")])
+    ])
   }
 ]
 render._withStripped = true
@@ -60062,7 +60139,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['story', 'isLogged'],
+    props: ['story', 'isLogged', 'user'],
     data: function data() {
         return {
             deleted: false
@@ -60090,11 +60167,22 @@ var render = function() {
   var _c = _vm._self._c || _h
   return !_vm.deleted
     ? _c("div", [
+        _c("p", { staticClass: "font-weight-bold" }, [
+          _vm._v(
+            _vm._s(_vm.user.name) +
+              " got rid of a " +
+              _vm._s(_vm.story.item.name) +
+              " and it costed around $" +
+              _vm._s(_vm.story.cost) +
+              "."
+          )
+        ]),
+        _vm._v(" "),
         _c("p", [_vm._v(_vm._s(_vm.story.body))]),
         _vm._v(" "),
-        _c("p", [_vm._v(_vm._s(_vm.story.cost))]),
-        _vm._v(" "),
-        _c("p", [_vm._v(_vm._s(_vm.story.created_at))]),
+        _c("p", { staticClass: "text-muted" }, [
+          _vm._v(_vm._s(_vm.story.created_at))
+        ]),
         _vm._v(" "),
         _vm.isLogged
           ? _c(
@@ -60223,7 +60311,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['stories', 'isLoggedIn']
+    props: ['stories', 'isLoggedIn', 'user']
 
 });
 
@@ -60240,7 +60328,7 @@ var render = function() {
     _vm._l(_vm.stories, function(story) {
       return _c("user-story", {
         key: story.id,
-        attrs: { story: story, isLogged: _vm.isLoggedIn }
+        attrs: { story: story, user: _vm.user, isLogged: _vm.isLoggedIn }
       })
     })
   )
@@ -60373,8 +60461,13 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "mt-5" },
     _vm._l(_vm.followers, function(user) {
-      return _c("tiny-follower", { key: user.id, attrs: { user: user } })
+      return _c("tiny-follower", {
+        key: user.id,
+        staticClass: "col-6 col-md-2 float-left mb-3",
+        attrs: { user: user }
+      })
     })
   )
 }
@@ -60506,8 +60599,13 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "mt-5" },
     _vm._l(_vm.followings, function(user) {
-      return _c("tiny-followee", { key: user.id, attrs: { user: user } })
+      return _c("tiny-followee", {
+        key: user.id,
+        staticClass: "col-6 col-md-2 float-left mb-3",
+        attrs: { user: user }
+      })
     })
   )
 }
@@ -61557,7 +61655,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\nimg {\n    height: 70px;\n    border-radius: 50%;\n}\n", ""]);
+exports.push([module.i, "\nimg {\n    height: 80px;\n    border-radius: 50%;\n}\n", ""]);
 
 // exports
 
@@ -61593,12 +61691,20 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("img", { attrs: { src: _vm.imagePath, alt: "Item image" } }),
+  return _c("div", { staticClass: "row mb-4" }, [
+    _c("img", {
+      staticClass: "col-4 col-md-2",
+      attrs: { src: _vm.imagePath, alt: "Item image" }
+    }),
     _vm._v(" "),
-    _c("a", { attrs: { href: "/items/" + _vm.item.id } }, [
-      _c("h4", [_vm._v(_vm._s(_vm.item.name))])
-    ])
+    _c(
+      "a",
+      {
+        staticClass: "display-4 ml-3 col-7",
+        attrs: { href: "/items/" + _vm.item.id }
+      },
+      [_vm._v(_vm._s(_vm.item.name))]
+    )
   ])
 }
 var staticRenderFns = []
@@ -61998,7 +62104,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -62009,6 +62115,10 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
 //
 //
 //
@@ -62047,9 +62157,24 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(_vm.stories, function(story) {
-      return _c("timeline-item", { key: story.id, attrs: { story: story } })
-    })
+    [
+      _c("h3", { staticClass: "mb-4" }, [_vm._v("Timeline:")]),
+      _vm._v(" "),
+      !_vm.stories.length
+        ? _c("div", [
+            _c("h4", [
+              _vm._v(
+                "This is where you'll see activity of people you follow. No follower stories available."
+              )
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm._l(_vm.stories, function(story) {
+        return _c("timeline-item", { key: story.id, attrs: { story: story } })
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -62180,7 +62305,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("p", [
+    _c("p", { staticClass: "lead" }, [
       _vm._v(
         _vm._s(_vm.story.owner.name) +
           " got rid of a " +

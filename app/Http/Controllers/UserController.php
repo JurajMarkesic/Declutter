@@ -36,7 +36,7 @@ class UserController extends Controller
 
         $isUser = $user == Auth::user();
 
-        $user->stories;
+        $user->load('stories.item');
         $user->followers;
         $user->followings;
 

@@ -1,16 +1,23 @@
 <template>
     <div>
-        <button @click="directToEdit">Edit</button><br>
+        <button @click="directToEdit" class="float-right btn btn-primary mt-4">Edit profile</button><br>
 
-        <a href="/profile/followers"><h4>Followers: {{ followerCount}}</h4></a>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a href="/profile/followers" class="nav-link ">Followers: {{ followerCount}}</a>
+            </li>
+            <li class="nav-item">
+                <a href="/profile/followings" class="nav-link ">Following: {{ followingCount}}</a>
+            </li>
+        </ul>
 
-        <a href="/profile/followings"><h4>Following: {{ followingCount}}</h4></a>
-
-        <img :src="imagePath" alt="user avatar">
-        <h3>{{ user.name }}</h3>
+        <div class="row mt-5">
+            <img :src="imagePath" alt="user avatar" class=" col-12 col-md-3">
+            <span class="display-4 ml-5 col-11 col-md-7">{{ user.name }}</span>
+        </div>
         <p class="mb-5">{{ user.bio }}</p>
 
-        <user-stories :stories="user.stories" :isLoggedIn="true"></user-stories>
+        <user-stories :stories="user.stories" :isLoggedIn="true" :user="user"></user-stories>
     </div>
 </template>
 
@@ -45,7 +52,7 @@
 
 <style>
     img {
-        height: 80px;
+        height: 130px;
         border-radius: 50%;
     }
 </style>

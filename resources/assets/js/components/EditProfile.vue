@@ -1,18 +1,18 @@
 <template>
     <div>
-        <label><h4>Edit Bio:</h4></label>
-        <textarea v-model="user.bio" cols="30" rows="10" class="form-control"></textarea>
+        <label class="mt-4"><h4>Edit Bio:</h4></label>
+        <textarea v-model="user.bio" rows="7" class="form-control"></textarea>
 
-        <button class="btn btn-success"  @click="edit">Edit</button>
+        <button class="btn btn-success mt-2" @click="edit">Edit</button>
 
         <br>
 
-        <div v-if="bioUpdated" class="alert alert-success">
+        <div v-if="bioUpdated" class="alert alert-success mt-2">
             Bio updated!
         </div>
         <br>
 
-        <label>Profile Visibility:</label><br>
+        <label class="mt-4 lead">Profile Visibility:</label><br>
         <h5 v-if="isVisible">Public</h5>
         <h5 v-else>Private</h5>
         <br>

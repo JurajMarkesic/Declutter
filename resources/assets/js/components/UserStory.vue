@@ -1,8 +1,8 @@
 <template>
     <div v-if="!deleted">
+        <p class="font-weight-bold">{{ user.name }} got rid of a {{ story.item.name }} and it costed around ${{ story.cost }}.</p>
         <p>{{ story.body }}</p>
-        <p>{{ story.cost }}</p>
-        <p>{{ story.created_at }}</p>
+        <p class="text-muted">{{ story.created_at }}</p>
 
         <button  v-if="isLogged" class="btn btn-danger" @click="del">Delete</button>
         <hr>
@@ -12,7 +12,7 @@
 <script>
     export default {
         props: [
-            'story', 'isLogged'
+            'story', 'isLogged', 'user'
         ],
         data() {
             return {

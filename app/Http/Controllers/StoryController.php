@@ -13,7 +13,7 @@ class StoryController extends Controller
     {
         $this->validate($request, [
             'item_id' => 'required|numeric',
-            'body' => 'required|max:300',
+            'body' => 'required|max:600',
             'cost' => 'required|numeric'
         ]);
 
@@ -33,7 +33,7 @@ class StoryController extends Controller
     public function update(Request $request, Story $story)
     {
         $this->validate($request, [
-            'body' => 'required|max:200',
+            'body' => 'required|max:600',
             'cost' => 'required|numeric'
         ]);
 

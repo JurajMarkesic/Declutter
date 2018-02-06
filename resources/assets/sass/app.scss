@@ -6,3 +6,43 @@
 
 // Bootstrap
 @import "~bootstrap/scss/bootstrap";
+
+
+#searchInput {
+  border: none;
+  background: transparent;
+}
+
+#searchInput:focus {
+  outline: none;
+}
+
+#searchButton {
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  color: black;
+  font-family:  Arial, sans-serif;
+  //font-weight: bold;
+}
+
+#searchButton:hover {
+  color: #1e7e57;
+}
+
+#searchForm {
+  border-bottom: 1px solid black;
+  //border-left: 2px solid black;
+  margin-top: 5px;
+}
+
+
+
+.nav-link {
+  font-size: 1rem;
+  font-family:  Arial, sans-serif;
+}
+
+.nav-item {
+  margin-left: 30px;
+}

@@ -1,7 +1,9 @@
 <template>
     <div>
-        <img :src="imagePath" alt="result image">
-        <h1><a :href="'/items/' + result.id" >{{ result.name }}</a></h1>
+        <div class="row mb-4">
+            <img :src="imagePath" alt="result image" class="col-4 col-md-2">
+            <a :href="'/items/' + result.id" class="display-4 ml-3 col-7" >{{ result.name }}</a>
+        </div>
     </div>
 </template>
 

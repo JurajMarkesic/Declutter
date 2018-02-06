@@ -2,16 +2,16 @@
 
 @section('content')
     <a href="/changePassword">
-        <button class="btn btn-primary">Change Password</button>
+        <button class="btn btn-primary mt-5">Change Password</button>
     </a>
 
     <br>
 
-    <form action="/profile" method="POST" enctype="multipart/form-data" class="form">
+    <form action="/profile" method="POST" enctype="multipart/form-data" class="form mt-4">
         <input type="hidden" name="_method" value="PATCH">
         {{ csrf_field() }}
 
-        <label>Select an image:</label>
+        <label class="lead">Select an image:</label>
         <input type="file" name="image" class="form-control">
 
         <br>

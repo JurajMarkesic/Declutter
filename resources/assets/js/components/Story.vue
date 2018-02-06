@@ -1,19 +1,17 @@
 <template>
     <div>
         <div v-if="isEdited">
-            <p>{{ user.name }}</p>
+            <label class="lead">Your Story:</label>
+            <textarea v-model="body" class="form-control mb-3" rows="3"></textarea>
 
-            <label>Your Story:</label>
-            <input type="text" v-model="body" class="form-control">
-
-            <label>Approximate Cost:</label>
-            <input type="number" v-model="cost" class="form-control">$
+            <label class="lead">Approximate Cost:</label>
+            <input type="number" v-model="cost" class="form-control mb-2" placeholder="$">
         </div>
 
         <div v-else>
-            <p>{{ user.name }}</p>
+            <p class="font-weight-bold">{{ user.name }}</p>
             <p>{{ story.body }}</p>
-            <p>${{ story.cost }}</p>
+            <p><b>Cost:</b> ${{ story.cost }}</p>
         </div>
 
         <div v-if="isUsersStory">
@@ -88,5 +86,7 @@
 </script>
 
 <style>
-
+    p {
+        word-break: break-all;
+    }
 </style>

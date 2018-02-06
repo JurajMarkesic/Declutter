@@ -1,13 +1,19 @@
 <template>
     <div>
-        <img :src="imagePath" alt="item image">
-        <h1>{{ item.name }}</h1>
-        <h3>Declutters: {{ declutters }}</h3>
-        <h3 v-if="avgCost">Average cost: {{ avgCost }}</h3>
-       <div v-if="noStory">
-           <button v-if="isDecluttered" class="btn btn-danger" @click="undoDeclutter">Undo</button>
-           <button v-else class="btn btn-success" @click="declutter">Declutter</button>
-       </div>
+        <div class="row mb-4">
+            <div id="imgWrap" class="col-12 col-md-4">
+                <img :src="imagePath" alt="item image">
+            </div>
+             <span class="display-3 col-11 col-md-7">{{ item.name }}</span>
+        </div>
+
+        <div v-if="noStory" class="mb-5">
+            <button v-if="isDecluttered" class="btn btn-danger" @click="undoDeclutter">Undo</button>
+            <button v-else class="btn btn-success" @click="declutter">Declutter</button>
+        </div>
+
+        <h3>Declutters: <b>{{ declutters }}</b></h3>
+        <h3 v-if="avgCost">Average cost: <b>{{ avgCost }}</b></h3>
     </div>
 </template>
 
@@ -90,9 +96,22 @@
 </script>
 
 <style>
-    img {
-        height: 80px;
-        border-radius: 50%;
 
+    #imgWrap {
+        overflow: hidden;
     }
+
+    img {
+        display: block;
+        height: 240px;
+        width: auto;
+    }
+
+    @media (max-width: 768px) {
+        img {
+            height: 160px;
+        }
+    }
+
+
 </style>

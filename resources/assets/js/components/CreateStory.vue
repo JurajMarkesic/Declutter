@@ -1,12 +1,12 @@
 <template>
-    <div v-if="notDecluttered">
-        <label>Your Story:</label>
-        <input type="text" v-model="body" class="form-control">
+    <div v-if="notDecluttered" class="mt-4">
+        <label class="lead">Your Story:</label>
+        <textarea v-model="body" class="form-control mb-3" rows="3"></textarea>
 
-        <label>Approximate Cost:</label>
-        <input type="number" v-model="cost" class="form-control">$
+        <label class="lead">Approximate Cost:</label>
+        <input type="number" v-model="cost" class="form-control col-11 col-sm-2" placeholder="$">
 
-        <button class="btn btn-primary" @click="post">Post</button>
+        <button class="btn btn-primary mt-3" @click="post">Post</button>
     </div>
 </template>
 
