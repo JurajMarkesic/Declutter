@@ -10029,3 +10029,9 @@ a.text-dark:focus {
   margin-left: 30px;
 }
 
+@media (min-width: 900px) {
+  .container {
+    width: 60%;
+  }
+}
+

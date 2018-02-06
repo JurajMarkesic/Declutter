@@ -1,6 +1,6 @@
 <template>
     <div>
-        <user-story v-for="story in stories" :story="story" :user="user" :isLogged="isLoggedIn" :key="story.id"></user-story>
+        <user-story v-for="story in reverseStories" :story="story" :user="user" :isLogged="isLoggedIn" :key="story.id"></user-story>
     </div>
 </template>
 
@@ -9,6 +9,11 @@
         props: [
             'stories', 'isLoggedIn', 'user'
         ],
+        computed: {
+            reverseStories() {
+                return this.stories.slice().reverse();
+            }
+        }
 
     }
 </script>

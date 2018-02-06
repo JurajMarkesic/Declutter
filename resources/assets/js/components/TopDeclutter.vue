@@ -1,10 +1,9 @@
 <template>
     <div>
-        <h2>Items with the most declutters:</h2>
-        <div v-for="item in items">
-            <h4>{{ item.name }}</h4>
-            <p>Declutters: {{ item.declutters }}</p>
-        </div>
+        <tr v-for="item in items">
+            <td>{{ item.name }}</td>
+            <td>{{ item.declutters }}</td>
+        </tr>
     </div>
 </template>
 

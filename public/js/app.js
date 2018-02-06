@@ -799,6 +799,8 @@ module.exports = {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "eventBus", function() { return eventBus; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_timeago__ = __webpack_require__(164);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_timeago___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_timeago__);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -809,6 +811,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 __webpack_require__(14);
 
 window.Vue = __webpack_require__(41);
+
+
+
+Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_timeago___default.a, {
+    name: 'timeago', // component name, `timeago` by default
+    locale: 'en-US',
+    locales: {
+        // you will need json-loader in webpack 1
+        'en-US': __webpack_require__(165)
+    }
+});
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -847,7 +860,7 @@ var eventBus = new Vue();
 // };
 
 var app = new Vue({
-  el: '#app'
+    el: '#app'
 });
 
 /***/ }),
@@ -60115,7 +60128,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -60137,12 +60150,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['story', 'isLogged', 'user'],
     data: function data() {
         return {
-            deleted: false
+            deleted: false,
+            time: this.story.created_at
         };
     },
 
@@ -60166,34 +60181,38 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return !_vm.deleted
-    ? _c("div", [
-        _c("p", { staticClass: "font-weight-bold" }, [
-          _vm._v(
-            _vm._s(_vm.user.name) +
-              " got rid of a " +
-              _vm._s(_vm.story.item.name) +
-              " and it costed around $" +
-              _vm._s(_vm.story.cost) +
-              "."
-          )
-        ]),
-        _vm._v(" "),
-        _c("p", [_vm._v(_vm._s(_vm.story.body))]),
-        _vm._v(" "),
-        _c("p", { staticClass: "text-muted" }, [
-          _vm._v(_vm._s(_vm.story.created_at))
-        ]),
-        _vm._v(" "),
-        _vm.isLogged
-          ? _c(
-              "button",
-              { staticClass: "btn btn-danger", on: { click: _vm.del } },
-              [_vm._v("Delete")]
+    ? _c(
+        "div",
+        [
+          _c("p", { staticClass: "font-weight-bold" }, [
+            _vm._v(
+              _vm._s(_vm.user.name) +
+                " got rid of a " +
+                _vm._s(_vm.story.item.name) +
+                " and it costed around $" +
+                _vm._s(_vm.story.cost) +
+                "."
             )
-          : _vm._e(),
-        _vm._v(" "),
-        _c("hr")
-      ])
+          ]),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(_vm.story.body))]),
+          _vm._v(" "),
+          _c("timeago", { attrs: { since: _vm.time, "auto-update": 60 } }),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _vm.isLogged
+            ? _c(
+                "button",
+                { staticClass: "btn btn-danger", on: { click: _vm.del } },
+                [_vm._v("Delete")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c("hr")
+        ],
+        1
+      )
     : _vm._e()
 }
 var staticRenderFns = []
@@ -60292,7 +60311,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -60311,7 +60330,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['stories', 'isLoggedIn', 'user']
+    props: ['stories', 'isLoggedIn', 'user'],
+    computed: {
+        reverseStories: function reverseStories() {
+            return this.stories.slice().reverse();
+        }
+    }
 
 });
 
@@ -60325,7 +60349,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(_vm.stories, function(story) {
+    _vm._l(_vm.reverseStories, function(story) {
       return _c("user-story", {
         key: story.id,
         attrs: { story: story, user: _vm.user, isLogged: _vm.isLoggedIn }
@@ -61812,7 +61836,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -61823,7 +61847,6 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
 //
 //
 //
@@ -61848,18 +61871,13 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    [
-      _c("h2", [_vm._v("Items with the most declutters:")]),
-      _vm._v(" "),
-      _vm._l(_vm.items, function(item) {
-        return _c("div", [
-          _c("h4", [_vm._v(_vm._s(item.name))]),
-          _vm._v(" "),
-          _c("p", [_vm._v("Declutters: " + _vm._s(item.declutters))])
-        ])
-      })
-    ],
-    2
+    _vm._l(_vm.items, function(item) {
+      return _c("tr", [
+        _c("td", [_vm._v(_vm._s(item.name))]),
+        _vm._v(" "),
+        _c("td", [_vm._v(_vm._s(item.declutters))])
+      ])
+    })
   )
 }
 var staticRenderFns = []
@@ -61958,7 +61976,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -61969,7 +61987,6 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
 //
 //
 //
@@ -61994,18 +62011,13 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    [
-      _c("h2", [_vm._v("Items with the highest average cost:")]),
-      _vm._v(" "),
-      _vm._l(_vm.items, function(item) {
-        return _c("div", [
-          _c("h4", [_vm._v(_vm._s(item[0].name))]),
-          _vm._v(" "),
-          _c("p", [_vm._v("$" + _vm._s(item[1]))])
-        ])
-      })
-    ],
-    2
+    _vm._l(_vm.items, function(item) {
+      return _c("tr", [
+        _c("td", [_vm._v(_vm._s(item[0].name))]),
+        _vm._v(" "),
+        _c("td", [_vm._v("$" + _vm._s(item[1]))])
+      ])
+    })
   )
 }
 var staticRenderFns = []
@@ -62273,7 +62285,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -62293,7 +62305,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['story']
+    props: ['story'],
+    data: function data() {
+        return {
+            time: this.story.created_at
+        };
+    }
 });
 
 /***/ }),
@@ -62304,20 +62321,23 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("p", { staticClass: "lead" }, [
-      _vm._v(
-        _vm._s(_vm.story.owner.name) +
-          " got rid of a " +
-          _vm._s(_vm.story.item.name) +
-          "."
-      )
-    ]),
-    _vm._v(" "),
-    _c("p", { staticClass: "text-muted" }, [
-      _vm._v(_vm._s(_vm.story.created_at))
-    ])
-  ])
+  return _c(
+    "div",
+    { staticClass: "mb-3" },
+    [
+      _c("p", { staticClass: "lead" }, [
+        _vm._v(
+          _vm._s(_vm.story.owner.name) +
+            " got rid of a " +
+            _vm._s(_vm.story.item.name) +
+            "."
+        )
+      ]),
+      _vm._v(" "),
+      _c("timeago", { attrs: { since: _vm.time, "auto-update": 60 } })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -62328,6 +62348,187 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-8ee7802a", module.exports)
   }
 }
+
+/***/ }),
+/* 164 */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function (global, factory) {
+   true ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global.VueTimeago = factory());
+}(this, (function () { 'use strict';
+
+var MINUTE = 60;
+var HOUR = MINUTE * 60;
+var DAY = HOUR * 24;
+var WEEK = DAY * 7;
+var MONTH = DAY * 30;
+var YEAR = DAY * 365;
+
+function pluralOrSingular(data, locale) {
+  if (data === 'just now') {
+    return locale
+  }
+  var count = Math.round(data);
+  if (Array.isArray(locale)) {
+    return count > 1
+      ? locale[1].replace(/%s/, count)
+      : locale[0].replace(/%s/, count)
+  }
+  return locale.replace(/%s/, count)
+}
+
+function formatTime(time) {
+  var d = new Date(time);
+  return d.toLocaleString()
+}
+
+function install(
+  Vue,
+  ref
+) {
+  if ( ref === void 0 ) ref = {};
+  var name = ref.name; if ( name === void 0 ) name = 'timeago';
+  var locale = ref.locale; if ( locale === void 0 ) locale = 'en-US';
+  var locales = ref.locales; if ( locales === void 0 ) locales = null;
+
+  if (!locales || Object.keys(locales).length === 0) {
+    throw new TypeError('Expected locales to have at least one locale.')
+  }
+
+  var VueTimeago = {
+    props: {
+      since: {
+        required: true
+      },
+      locale: String,
+      maxTime: Number,
+      autoUpdate: Number,
+      format: Function
+    },
+    data: function data() {
+      return {
+        now: new Date().getTime()
+      }
+    },
+    computed: {
+      currentLocale: function currentLocale() {
+        var current = locales[this.locale || locale];
+        if (!current) {
+          return locales[locale]
+        }
+        return current
+      },
+      sinceTime: function sinceTime() {
+        return new Date(this.since).getTime()
+      },
+      timeForTitle: function timeForTitle() {
+        var seconds = this.now / 1000 - this.sinceTime / 1000;
+
+        if (this.maxTime && seconds > this.maxTime) {
+          return null
+        }
+
+        return this.format
+          ? this.format(this.sinceTime)
+          : formatTime(this.sinceTime)
+      },
+      timeago: function timeago() {
+        var seconds = this.now / 1000 - this.sinceTime / 1000;
+
+        if (this.maxTime && seconds > this.maxTime) {
+          clearInterval(this.interval);
+          return this.format
+            ? this.format(this.sinceTime)
+            : formatTime(this.sinceTime)
+        }
+
+        var ret =
+          seconds <= 5
+            ? pluralOrSingular('just now', this.currentLocale[0])
+            : seconds < MINUTE
+              ? pluralOrSingular(seconds, this.currentLocale[1])
+              : seconds < HOUR
+                ? pluralOrSingular(seconds / MINUTE, this.currentLocale[2])
+                : seconds < DAY
+                  ? pluralOrSingular(seconds / HOUR, this.currentLocale[3])
+                  : seconds < WEEK
+                    ? pluralOrSingular(seconds / DAY, this.currentLocale[4])
+                    : seconds < MONTH
+                      ? pluralOrSingular(seconds / WEEK, this.currentLocale[5])
+                      : seconds < YEAR
+                        ? pluralOrSingular(
+                            seconds / MONTH,
+                            this.currentLocale[6]
+                          )
+                        : pluralOrSingular(
+                            seconds / YEAR,
+                            this.currentLocale[7]
+                          );
+
+        return ret
+      }
+    },
+    mounted: function mounted() {
+      if (this.autoUpdate) {
+        this.update();
+      }
+    },
+    render: function render(h) {
+      return h(
+        'time',
+        {
+          attrs: {
+            datetime: new Date(this.since),
+            title: this.timeForTitle
+          }
+        },
+        this.timeago
+      )
+    },
+    watch: {
+      autoUpdate: function autoUpdate(newAutoUpdate) {
+        this.stopUpdate();
+        // only update when it's not falsy value
+        // which means you cans set it to 0 to disable auto-update
+        if (newAutoUpdate) {
+          this.update();
+        }
+      }
+    },
+    methods: {
+      update: function update() {
+        var this$1 = this;
+
+        var period = this.autoUpdate * 1000;
+        this.interval = setInterval(function () {
+          this$1.now = new Date().getTime();
+        }, period);
+      },
+      stopUpdate: function stopUpdate() {
+        clearInterval(this.interval);
+        this.interval = null;
+      }
+    },
+    beforeDestroy: function beforeDestroy() {
+      this.stopUpdate();
+    }
+  };
+
+  Vue.component(name, VueTimeago);
+}
+
+return install;
+
+})));
+
+
+/***/ }),
+/* 165 */
+/***/ (function(module, exports) {
+
+module.exports = ["just now",["%s second ago","%s seconds ago"],["%s minute ago","%s minutes ago"],["%s hour ago","%s hours ago"],["%s day ago","%s days ago"],["%s week ago","%s weeks ago"],["%s month ago","%s months ago"],["%s year ago","%s years ago"]]
 
 /***/ })
 /******/ ]);

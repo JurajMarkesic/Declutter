@@ -11,6 +11,12 @@
 
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav">
+                @auth
+                    <li class="nav-item"><a href="/home" class="nav-link">HOME</a></li>
+                @endauth
+                <li class="nav-item">
+                    <a href="/top" class="nav-link">TOP</a>
+                </li>
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
@@ -27,7 +33,6 @@
                     <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">LOGIN</a></li>
                     <li class="nav-item"><a href="{{ route('register') }}" class="nav-link">REGISTER</a></li>
                 @else
-                    <li class="nav-item"><a href="/home" class="nav-link">HOME</a></li>
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">

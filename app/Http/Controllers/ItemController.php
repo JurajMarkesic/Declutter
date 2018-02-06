@@ -129,7 +129,7 @@ class ItemController extends Controller
 
     public function top()
     {
-        $declutters = DB::table('items')->orderBy('declutters', 'desc')->take(10)->get();
+        $declutters = DB::table('items')->orderBy('declutters', 'desc')->take(5)->get();
 
 
         $items = Item::all();
@@ -164,7 +164,7 @@ class ItemController extends Controller
 
         $sorted = $this->quicksort($itemsCost);
 
-        $itemsByCost = array_slice($sorted, 0, 10);
+        $itemsByCost = array_slice($sorted, 0, 5);
 
         return view('top', compact('itemsByCost', 'declutters'));
     }
@@ -283,7 +283,7 @@ class ItemController extends Controller
 
             // loop and compare each item in the array to the pivot value, place item in appropriate partition
             for ($i = 1; $i < count($array); $i++) {
-                if ($array[$i]->created_at < $pivot->created_at) {
+                if ($array[$i]->created_at > $pivot->created_at) {
                     $left[] = $array[$i];
                 } else {
                     $right[] = $array[$i];

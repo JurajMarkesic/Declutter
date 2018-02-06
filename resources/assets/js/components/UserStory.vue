@@ -2,7 +2,8 @@
     <div v-if="!deleted">
         <p class="font-weight-bold">{{ user.name }} got rid of a {{ story.item.name }} and it costed around ${{ story.cost }}.</p>
         <p>{{ story.body }}</p>
-        <p class="text-muted">{{ story.created_at }}</p>
+        <timeago :since="time" :auto-update="60"></timeago>
+        <br>
 
         <button  v-if="isLogged" class="btn btn-danger" @click="del">Delete</button>
         <hr>
@@ -16,7 +17,8 @@
         ],
         data() {
             return {
-                deleted: false
+                deleted: false,
+                time: this.story.created_at
             }
         },
         methods: {

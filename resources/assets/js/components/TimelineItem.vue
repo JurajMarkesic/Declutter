@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="mb-3">
         <p class="lead">{{ story.owner.name }} got rid of a {{ story.item.name }}.</p>
-        <p class="text-muted">{{ story.created_at }}</p>
+        <timeago :since="time" :auto-update="60"></timeago>
     </div>
 </template>
 
@@ -9,7 +9,12 @@
     export default {
         props: [
             'story'
-        ]
+        ],
+        data() {
+            return {
+                time: this.story.created_at
+            }
+        }
     }
 </script>
 
