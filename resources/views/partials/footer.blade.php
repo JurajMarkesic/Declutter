@@ -1,4 +1,3 @@
 <footer>
-    <p>memes memesmemesmemesmemesmemesmemesmemesmemesmemesmemesmemesmemesmemesmemes</p>
-    <h1>memes</h1>
+    <a href="https://github.com/JurajMarkesic/Declutter">Declutter 2018 @ Github</a>
 </footer>

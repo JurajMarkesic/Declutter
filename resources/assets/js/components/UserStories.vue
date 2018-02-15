@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    export default { //TODO pagination
+    export default {
         props: [
             'isLoggedIn', 'user'
         ],

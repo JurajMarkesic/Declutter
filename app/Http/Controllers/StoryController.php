@@ -61,12 +61,12 @@ class StoryController extends Controller
 
     public function getUserStories(User $user)  //returns and caches all stories created by the user
     {
-        if(Cache::has('user:stories'.$user->id)) {
-            $stories = Cache::get('user:stories'.$user->id);
-        }else {
+//        if(Cache::has('user:stories'.$user->id)) {
+//            $stories = Cache::get('user:stories'.$user->id);
+//        }else {
             $stories = $user->stories()->with('item')->orderBy('created_at', 'DESC')->paginate(6);
-            Cache::forever('user:stories'.$user->id, $stories);
-        }
+//            Cache::forever('user:stories'.$user->id, $stories);
+//        }
 
         return response()->json(['stories' => $stories]);
     }

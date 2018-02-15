@@ -59361,7 +59361,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -59372,6 +59372,9 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
 //
 //
 //
@@ -59393,9 +59396,20 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(_vm.results, function(result) {
-      return _c("result", { key: result.id, attrs: { result: result } })
-    })
+    [
+      !_vm.results.length
+        ? _c("div", [
+            _c("h3", { staticClass: "text-warning" }, [
+              _vm._v("No items match your query.")
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm._l(_vm.results, function(result) {
+        return _c("result", { key: result.id, attrs: { result: result } })
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -59963,7 +59977,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "row mt-5" }, [
+      _c("div", { staticClass: "row mt-5 mb-5" }, [
         _c("img", {
           staticClass: " col-12 col-md-3",
           attrs: { src: _vm.imagePath, alt: "user avatar" }
@@ -59978,8 +59992,6 @@ var render = function() {
           [_vm._v(_vm._s(_vm.user.name))]
         )
       ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "mb-5" }, [_vm._v(_vm._s(_vm.user.bio))]),
       _vm._v(" "),
       _c("user-stories", { attrs: { isLoggedIn: true, user: _vm.user } })
     ],
@@ -60560,7 +60572,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-/* harmony default export */ __webpack_exports__["default"] = ({ //TODO pagination
+/* harmony default export */ __webpack_exports__["default"] = ({
     props: ['isLoggedIn', 'user'],
     data: function data() {
         return {

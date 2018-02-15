@@ -16,6 +16,8 @@ Route::get('/', 'HomeController@landing');
 Auth::routes();
 
 
+Route::get('/stories/user/{user}', 'StoryController@getUserStories');
+
 Route::prefix('/items')->group(function() {
     Route::get('/stories/{item}', 'ItemController@stories');
 
@@ -24,12 +26,10 @@ Route::prefix('/items')->group(function() {
     Route::get('/check/{item}', 'ItemController@checkDeclutter');
 
     Route::get('/undoDeclutter/{item}', 'ItemController@undoDeclutter');
-
-    Route::resource('', 'ItemController');
 });
 
+Route::resource('/items', 'ItemController');
 
-Route::get('/stories/user/{user}', 'StoryController@getUserStories');
 
 Route::resource('/stories', 'StoryController');
 
