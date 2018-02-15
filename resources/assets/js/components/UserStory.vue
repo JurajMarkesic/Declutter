@@ -1,11 +1,12 @@
 <template>
     <div v-if="!deleted">
-        <p class="font-weight-bold">{{ user.name }} got rid of a {{ story.item.name }} and it costed around ${{ story.cost }}.</p>
+        <p class="font-weight-bold">{{ user.name }} got rid of a {{ story.item.name}} and it cost around ${{ story.cost }}.</p>
         <p>{{ story.body }}</p>
-        <timeago :since="time" :auto-update="60"></timeago>
-        <br>
+        <div class="row">
+            <timeago :since="time" :auto-update="60" class="col-6"></timeago>
+            <button  v-if="isLogged" class="btn btn-danger col-3 offset-md-3 col-md-1 offset-md-8" @click="del">Delete</button>
+        </div>
 
-        <button  v-if="isLogged" class="btn btn-danger" @click="del">Delete</button>
         <hr>
     </div>
 </template>

@@ -4,14 +4,21 @@ namespace App\Http\ViewComposers;
 
 use Illuminate\View\View;
 use App\Category;
+use Cache;
 
 class LayoutComposer
 {
     public $categories = [];
 
+
     public function __construct()
     {
-        $this->categories = Category::all();
+        if(Cache::has('categories:all')) {
+            $this->categories = Cache::get('categories:all');
+        } else {
+            $this->categories = Category::all();
+            Cache::forever('categories:all', $this->categories);
+        }
     }
 
     /**

@@ -1,6 +1,8 @@
 <template>
     <div>
-        <h3 class="mb-4">Timeline:</h3>
+        <h3 class="mb-2 ml-1 pt-3" id="timelineTitle">See what people you follow got rid of</h3>
+
+
         <div v-if="!stories.length">
             <h4>This is where you'll see activity of people you follow. No follower stories available.</h4>
         </div>
@@ -31,4 +33,9 @@
 
 <style>
 
+    #timelineTitle {
+        font-family: Arial, sans-serif;
+        font-weight: 700;
+        font-size: 1.3rem;
+    }
 </style>

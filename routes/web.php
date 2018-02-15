@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@landing');
 
 Auth::routes();
 
@@ -28,6 +26,8 @@ Route::get('/items/check/{item}', 'ItemController@checkDeclutter');
 Route::get('/items/undoDeclutter/{item}', 'ItemController@undoDeclutter');
 
 Route::resource('/items', 'ItemController');
+
+Route::get('/stories/user/{user}', 'StoryController@getUserStories');
 
 Route::resource('/stories', 'StoryController');
 
@@ -69,4 +69,6 @@ Route::get('/timeline/stories', 'ItemController@getFolloweeStories');
 
 Route::delete('/deleteUser/{user}', 'UserController@destroy');
 
+
+Route::get('/cost/{user}', 'UserController@averageCost');
 

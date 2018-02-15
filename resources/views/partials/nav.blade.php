@@ -1,10 +1,14 @@
-<nav class="navbar navbar-expand-lg navbar-light mb-2 mt-2">
-    <div class="container">
+<div class="container-fluid">
+<nav class="navbar navbar-expand-lg navbar-light mb-5 mt-2">
         <div class="navbar-brand">
-            @include('partials.search')
+            @if(Request::path() == '/')
+                <h1 id="landingTitle">DECLUTTER</h1>
+            @else
+                @include('partials.search')
+            @endif
         </div>
 
-        <button class="navbar-toggler mt-3" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -22,7 +26,7 @@
                        aria-haspopup="true" aria-expanded="false">
                         CATEGORY
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                    <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink">
                         @foreach($categories as $category)
                             <a href="/categories/{{$category->id}}" class="dropdown-item">{{ $category->name }}</a>
                         @endforeach
@@ -38,7 +42,7 @@
                            aria-haspopup="true" aria-expanded="false">
                             {{ Auth::user()->name }}
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink">
                             <a href="/profile/{{Auth::id()}}" class="dropdown-item">Profile</a>
                             <a href="{{ route('logout') }}" class="dropdown-item"
                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
@@ -55,5 +59,5 @@
                 @endif
             </ul>
         </div>
-    </div>
 </nav>
+</div>

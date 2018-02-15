@@ -16,9 +16,11 @@
 <body>
 <div id="app">
     @include('partials.nav')
-    <div class="container">
+    <div class="container mb-5">
         @yield('content')
     </div>
+    @include('partials.footer')
+
 </div>
 
 <!-- Scripts -->

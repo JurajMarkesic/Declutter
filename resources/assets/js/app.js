@@ -45,11 +45,22 @@ Vue.component('admin', require('./components/Admin.vue'));
 Vue.component('category', require('./components/Category.vue'))
 Vue.component('category-items', require('./components/CategoryItems.vue'));
 Vue.component('category-item', require('./components/CategoryItem.vue'));
-Vue.component('top-declutter', require('./components/TopDeclutter.vue'));
-Vue.component('top-cost', require('./components/TopCost.vue'));
 Vue.component('timeline', require('./components/Timeline.vue'));
 Vue.component('timeline-item', require('./components/TimelineItem.vue'));
+Vue.component('info-container', require('./components/InfoContainer.vue'));
 
+Vue.filter('round', function(value, decimals) {
+    if(!value) {
+        value = 0;
+    }
+
+    if(!decimals) {
+        decimals = 0;
+    }
+
+    value = Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
+    return value;
+});
 
 
 export const eventBus = new Vue();

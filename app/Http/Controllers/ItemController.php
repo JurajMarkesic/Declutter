@@ -8,6 +8,8 @@ use App\Category;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
+use Cache;
+use Illuminate\Support\Facades\Redis;
 
 class ItemController extends Controller
 {
@@ -15,7 +17,12 @@ class ItemController extends Controller
 
     public function create()
     {
-        $categories = Category::all();
+        if(Cache::has('categories:all')) {
+            $categories = Cache::get('categories:all');
+        } else {
+            $categories = Category::all();
+            Cache::forever('categories:all', $categories);
+        }
 
         return view('createItem')->with('categories', $categories);
     }
@@ -116,55 +123,79 @@ class ItemController extends Controller
 
     public function checkDeclutter(Item $item)
     {
-        if (Auth::user()->decluttered->contains($item)) {
-            $isDecluttered = true;
+        if (Auth::check()) {
+            $isLoggedIn = true;
+
+            if (Auth::user()->decluttered->contains($item)) {
+                $isDecluttered = true;
+            } else {
+                $isDecluttered = false;
+            }
+
         } else {
-            $isDecluttered = false;
+            $isLoggedIn = false;
+            $isDecluttered = true;
         }
 
+
+
         return response()->json([
-            'isDecluttered' => $isDecluttered
+            'isDecluttered' => $isDecluttered,
+            'isLoggedIn' => $isLoggedIn
         ]);
     }
 
     public function top()
     {
-        $declutters = DB::table('items')->orderBy('declutters', 'desc')->take(5)->get();
-
-
-        $items = Item::all();
-
-        $itemsCost = [];
-
-        foreach ($items as $item) {
-            $stories = $item->stories()->get();
-
-            $count = $item->stories->count();
-
-            if (!$count) {
-                $itemAverage = [$item, 0];
-
-                array_push($itemsCost, $itemAverage);
-
-                continue;
-            }
-
-            $total = 0;
-
-            foreach ($stories as $story) {
-                $total += $story->cost;
-            }
-
-            $average = $total / $count;
-
-            $itemAverage = [$item, $average];
-
-            array_push($itemsCost, $itemAverage);
+        if(Cache::has('top:items:declutters')) {
+            $declutters = Cache::get('top:items:declutters');
+        }else {
+            $declutters = DB::table('items')->orderBy('declutters', 'desc')->take(5)->get();
+            Cache::put('top:items:declutters', $declutters, 60);
         }
 
-        $sorted = $this->quicksort($itemsCost);
 
-        $itemsByCost = array_slice($sorted, 0, 5);
+        if (Cache::has('top:items:cost')) {
+            $itemsByCost = Cache::get('top:items:cost');
+        } else {
+            $items = Item::with('stories')->get();
+
+            $itemsCost = [];
+
+            foreach ($items as $item) {
+                $stories = $item->stories;
+
+                $count = $item->stories->count();
+
+                if (!$count) {
+                    $itemAverage = [$item, 0];
+
+                    array_push($itemsCost, $itemAverage);
+
+                    continue;
+                }
+
+                $total = 0;
+
+                foreach ($stories as $story) {
+                    $total += $story->cost;
+                }
+
+                $average = $total / $count;
+
+                $itemAverage = [$item, $average];
+
+                array_push($itemsCost, $itemAverage);
+            }
+
+            $sorted = $this->quicksort($itemsCost);
+
+            $itemsByCost = array_slice($sorted, 0, 5);
+
+            Cache::put('top:items:cost', $itemsByCost, 60);
+        }
+
+
 
         return view('top', compact('itemsByCost', 'declutters'));
     }
@@ -217,29 +248,35 @@ class ItemController extends Controller
         }
     }
 
-    public function getFolloweeStories()  //should be cached and refreshed only when an event is fired that a followee wrote a story
+    public function getFolloweeStories()
     {
         $user = Auth::user();
 
-        $followings = $user->followings()->with('stories')->get();
+        if(Cache::has('follow:stories:'.$user->id)) {
+            $stories = Cache::get('follow:stories:'.$user->id);
+        } else {
+            $followings = $user->followings()->with('stories')->get();
 
-        $storiesAll = array();
+            $storiesAll = array();
 
-        foreach($followings as $followee) {
-            $latestStories = $followee->stories()->latest()->take(10)->get();
+            foreach($followings as $followee) {
+                $latestStories = $followee->stories()->latest()->take(10)->get();
 
-            foreach($latestStories as $stry) {
-                array_push($storiesAll, $stry);
+                foreach($latestStories as $stry) {
+                    array_push($storiesAll, $stry);
+                }
             }
-        }
 
-           $storiesAll = $this->quicksortByDate($storiesAll);
+            $storiesAll = $this->quicksortByDate($storiesAll);
 
 
-        $stories = array_slice($storiesAll, 0,15);
+            $stories = array_slice($storiesAll, 0,15);
 
-        foreach($stories as $stry) {
-            $stry->load(['owner', 'item']); //horrible
+            foreach($stories as $stry) {
+                $stry->load(['owner', 'item']); //horrible
+            }
+
+            Cache::put('follow:stories:'.$user->id, $stories, 1);
         }
 
         return response()->json([
@@ -260,7 +297,7 @@ class ItemController extends Controller
 
                 $j = $i - 1;                              //start loop on one item behind the current one
 
-                while ($j >= 0 && $array[$j]->created_at > $val->created_at) {         //stop loop when you reach item's place or the start of an array
+                while ($j >= 0 && $array[$j]->created_at < $val->created_at) {         //stop loop when you reach item's place or the start of an array
                     $array[$j + 1] = $array[$j];                    //switch values
 
                     $j--;

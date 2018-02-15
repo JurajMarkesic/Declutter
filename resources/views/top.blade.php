@@ -4,8 +4,8 @@
 
 
      <div class="row mt-5">
-         <div class="col-6">
-           <p class="lead font-weight-bold">Items with the most declutters.</p>
+         <div class="col-md-6 mb-5">
+           <p class="lead font-weight-bold">Most Declutters.</p>
                <table class="table table-striped ">
                 <thead class="thead-dark">
                     <tr>
@@ -16,7 +16,7 @@
                 <tbody>
                     @foreach($declutters as $item)
                         <tr>
-                            <td>{{ $item->name }}</td>
+                            <td><a href="/items/{{$item->id}}" style="color: seagreen">{{ $item->name }}</a></td>
                             <td>{{ $item->declutters }}</td>
                         </tr>
                     @endforeach
@@ -24,8 +24,8 @@
              </table>
          </div>
 
-        <div  class="col-6">
-            <p class="lead font-weight-bold">Items with the highest average cost.</p>
+        <div  class="col-md-6">
+            <p class="lead font-weight-bold">The highest average cost.</p>
             <table class="table table-striped">
                 <thead class="thead-dark">
                     <tr>
@@ -36,8 +36,8 @@
                 <tbody>
                 @foreach($itemsByCost as $item)
                     <tr>
-                        <td>{{ $item[0]->name }}</td>
-                        <td>{{ $item[1] }}</td>
+                        <td><a href="/items/{{$item[0]->id}}" style="color: seagreen">{{ $item[0]->name }}</a></td>
+                        <td>${{ number_format((float)$item[1], 2, '.', '') }}</td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -45,14 +45,5 @@
         </div>
     </div>
 
-    <style>
-        /*.table {*/
-            /*width: 40% !important;*/
-        /*}*/
-
-        /*.table-striped {*/
-            /*width: 40% !important;*/
-        /*}*/
-    </style>
 
 @endsection

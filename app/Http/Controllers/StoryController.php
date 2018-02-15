@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Story;
+use App\User;
 use Illuminate\Http\Request;
 use Auth;
+use Cache;
 
 class StoryController extends Controller
 {
@@ -26,6 +28,10 @@ class StoryController extends Controller
 
         $story->save();
 
+        Cache::forget('user:full:' . Auth::id());
+        Cache::forget('user:stories:'.Auth::id());
+        Cache::forget('user:cost:' . Auth::id());
+
         return response("Story stored.", 200);
     }
 
@@ -42,7 +48,22 @@ class StoryController extends Controller
 
         $story->update();
 
+        Cache::forget('user:full:' . Auth::id());
+        Cache::forget('user:cost:' . Auth::id());
+
         return response("Story updated.", 200);
+    }
+
+    public function getUserStories(User $user)
+    {
+        if(Cache::has('user:stories'.$user->id)) {
+            $stories = Cache::get('user:stories'.$user->id);
+        }else {
+            $stories = $user->stories()->with('item')->orderBy('created_at', 'DESC')->paginate(6);
+            Cache::forever('user:stories'.$user->id, $stories);
+        }
+
+        return response()->json(['stories' => $stories]);
     }
 
 
@@ -50,6 +71,11 @@ class StoryController extends Controller
     {
         try {
             $story->delete();
+
+            Cache::forget('user:full:'.Auth::id());
+            Cache::forget('user:stories:'.Auth::id());
+            Cache::forget('user:cost:' . Auth::id());
+
             return response("Story deleted.", 200);
         } catch (\Exception $e) {
             report($e);

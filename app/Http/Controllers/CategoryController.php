@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use Cache;
+
 
 class CategoryController extends Controller
 {
@@ -14,7 +16,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        if(Cache::has('categories:all')) {
+            $categories = Cache::get('categories:all');
+        } else {
+            $categories = Category::all();
+            Cache::forever('categories:all', $categories);
+        }
 
         return response()->json([
             'categories' => $categories
@@ -34,6 +41,8 @@ class CategoryController extends Controller
         $category->name = $request->input('name');
 
         $category->save();
+
+        Cache::forget('categories:all');
 
         return response("Category saved.", 200);
     }
@@ -62,6 +71,7 @@ class CategoryController extends Controller
     {
         try {
             $category->delete();
+            Cache::forget('categories:all');
         } catch(\Exception $e) {
             report($e);
             return response("Category not found." , 404);

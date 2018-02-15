@@ -4,16 +4,16 @@
             <div id="imgWrap" class="col-12 col-md-4">
                 <img :src="imagePath" alt="item image">
             </div>
-             <span class="display-3 col-11 col-md-7">{{ item.name }}</span>
+             <span class="display-4 col-11 col-md-7">{{ item.name }}</span>
         </div>
 
-        <div v-if="noStory" class="mb-5">
+        <div v-if="noStory && isLoggedIn" class="mb-5">
             <button v-if="isDecluttered" class="btn btn-danger" @click="undoDeclutter">Undo</button>
             <button v-else class="btn btn-success" @click="declutter">Declutter</button>
         </div>
 
         <h3>Declutters: <b>{{ declutters }}</b></h3>
-        <h3 v-if="avgCost">Average cost: <b>{{ avgCost }}</b></h3>
+        <h3 v-if="avgCost">Average cost: <b>${{ avgCost | round(2) }}</b></h3>
     </div>
 </template>
 
@@ -29,6 +29,7 @@
                 isDecluttered: false,
                 noStory: true,
                 declutters: this.item.declutters,
+                isLoggedIn: false,
             }
         },
         computed: {
@@ -68,6 +69,7 @@
                 axios.get('/items/check/' + this.item.id)
                     .then((response) => {
                         this.isDecluttered = response.data.isDecluttered;
+                        this.isLoggedIn = response.data.isLoggedIn;
                     })
             }
         },
@@ -103,7 +105,7 @@
 
     img {
         display: block;
-        height: 240px;
+        height: 200px;
         width: auto;
     }
 

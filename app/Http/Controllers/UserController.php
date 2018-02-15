@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Auth;
 use Hash;
+use Cache;
 
 class UserController extends Controller
 {
@@ -36,9 +37,14 @@ class UserController extends Controller
 
         $isUser = $user == Auth::user();
 
-        $user->load('stories.item');
-        $user->followers;
-        $user->followings;
+        if(Cache::has('user:full:'.$user->id)) {
+            $user = Cache::get('user:full:'.$user->id);
+        }else {
+            $user->load('stories.item');
+            $user->followers;
+            $user->followings;
+            Cache::forever('user:full:'.$user->id, $user);
+        }
 
         $isPublic = $user->public;
 
@@ -126,6 +132,9 @@ class UserController extends Controller
             $following = true;
         }
 
+        Cache::forget('user:follows:'.$follower->id);
+        Cache::forget('user:following:'.$followee->id);
+
         return response()->json([
            'following' => $following
         ]);
@@ -152,7 +161,12 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        $followers = $user->followers()->get();
+        if(Cache::has('user:following:'.$user->id)) {
+            $followers = Cache::get('user:following:'.$user->id);
+        }else {
+            $followers = $user->followers()->get();
+            Cache::forever('user:following:'.$user->id, $followers);
+        }
 
         return view('followers')->with('followers',$followers);
     }
@@ -161,7 +175,12 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        $followings = $user->followings()->get();
+        if(Cache::has('user:follows:'.$user->id)) {
+            $followings = Cache::get('user:follows:'.$user->id);
+        }else {
+            $followings = $user->followings()->get();
+            Cache::forever('user:follows:'.$user->id, $followings);
+        }
 
         return view('followings')->with('followings', $followings);
     }
@@ -190,6 +209,30 @@ class UserController extends Controller
             return true;
         }
         return false;
+    }
+
+    public function averageCost(User $user)
+    {
+        if(Cache::has('user:cost:'.$user->id)) {
+            $cost = Cache::get('user:cost:'.$user->id);
+        } else {
+            $stories = $user->stories()->get();
+
+            $total = 0;
+
+            $count = 0;
+
+            foreach($stories as $story) {
+                $count++;
+                $total += $story->cost;
+            }
+
+            $cost = $total / $count;
+
+            Cache::forever('user:cost:'.$user->id, $cost);
+        }
+
+        return response()->json(['cost' => $cost]);
     }
 
     public function destroy(User $user)

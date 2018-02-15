@@ -13,11 +13,11 @@
 
         <div class="row mt-5">
             <img :src="imagePath" alt="user avatar" class=" col-12 col-md-3">
-            <span class="display-4 ml-5 col-11 col-md-7">{{ user.name }}</span>
+            <span class="display-4 ml-5 col-11 col-md-7" style="color: seagreen">{{ user.name }}</span>
         </div>
         <p class="mb-5">{{ user.bio }}</p>
 
-        <user-stories :stories="user.stories" :isLoggedIn="true" :user="user"></user-stories>
+        <user-stories  :isLoggedIn="true" :user="user"></user-stories>
     </div>
 </template>
 

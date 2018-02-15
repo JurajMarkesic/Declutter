@@ -1,7 +1,7 @@
 <template>
     <div class="row mb-4">
-        <img :src="imagePath" alt="Item image" class="col-4 col-md-2">
-        <a :href="'/items/' + item.id" class="display-4 ml-3 col-7">{{ item.name }}</a>
+        <img :src="imagePath" alt="Item image" class="col-3 col-md-2">
+        <a :href="'/items/' + item.id" class="ml-3 col-7 mt-1 green-link" id="catItem">{{ item.name }}</a>
     </div>
 </template>
 
@@ -22,5 +22,13 @@
     img {
         height: 80px;
         border-radius: 50%;
+    }
+
+    #catItem {
+        font-size: 1.5rem;
+    }
+
+    .green-link {
+        color: seagreen;
     }
 </style>
