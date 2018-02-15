@@ -59678,6 +59678,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['user'],
@@ -59752,7 +59753,11 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("p", { staticClass: "mb-5" }, [_vm._v(_vm._s(_vm.user.bio))]),
+      _c("h4", { staticClass: "mt-4 ml-5 font-weight-bold" }, [_vm._v("Bio:")]),
+      _vm._v(" "),
+      _c("p", { staticClass: "mb-5 ml-5 mr-5 lead" }, [
+        _vm._v(_vm._s(_vm.user.bio))
+      ]),
       _vm._v(" "),
       _c("user-stories", {
         attrs: { stories: _vm.user.stories, user: _vm.user }
@@ -60077,7 +60082,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -60088,6 +60093,8 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -60126,7 +60133,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             axios.patch('/profile', {
-                bio: this.user.bio
+                'bio': this.user.bio
             }).then(function () {
                 _this.bioUpdated = true;
             });
@@ -60192,6 +60199,8 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _c("br"),
+    _vm._v(" "),
+    _c("h3", { staticClass: "mt-3 font-weight-bold" }, [_vm._v("Account:")]),
     _vm._v(" "),
     _c("label", { staticClass: "mt-4 lead" }, [_vm._v("Profile Visibility:")]),
     _c("br"),
@@ -62226,7 +62235,7 @@ var render = function() {
         ? _c("div", [
             _c("h4", [
               _vm._v(
-                "This is where you'll see activity of people you follow. No follower stories available."
+                " No follower stories available. You should follow more people!"
               )
             ])
           ])

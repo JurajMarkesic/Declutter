@@ -15,60 +15,72 @@ Route::get('/', 'HomeController@landing');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/items/stories/{item}', 'ItemController@stories');
+Route::prefix('/items')->group(function() {
+    Route::get('/stories/{item}', 'ItemController@stories');
 
-Route::get('/items/declutter/{item}', 'ItemController@declutter');
+    Route::get('/declutter/{item}', 'ItemController@declutter');
 
-Route::get('/items/check/{item}', 'ItemController@checkDeclutter');
+    Route::get('/check/{item}', 'ItemController@checkDeclutter');
 
-Route::get('/items/undoDeclutter/{item}', 'ItemController@undoDeclutter');
+    Route::get('/undoDeclutter/{item}', 'ItemController@undoDeclutter');
 
-Route::resource('/items', 'ItemController');
+    Route::resource('', 'ItemController');
+});
+
 
 Route::get('/stories/user/{user}', 'StoryController@getUserStories');
 
 Route::resource('/stories', 'StoryController');
 
-Route::get('/getuser/{id}', 'UserController@getUserById');
+
+Route::prefix('/profile')->group(function() {
+    Route::get('/edit','UserController@edit');
+
+    Route::get('/{id}/follow', 'UserController@toggleFollow');
+
+    Route::get('/followers', 'UserController@getFollowers');
+
+    Route::get('/followings', 'UserController@getFollowings');
+
+    Route::get('/visibility', 'UserController@toggleVisibility');
+
+    Route::get('/{id}/checkLogIn', 'UserController@checkLogIn');
+
+    Route::get('/{id}/check', 'UserController@checkFollow');
+
+    Route::get('/{id}', 'UserController@profile');
+
+    Route::patch('', 'UserController@update');
+
+});
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/search', 'SearchController@searchItems');
 
 Route::post('/searchUser', 'UserController@searchUsers');
 
-Route::get('/profile/edit','UserController@edit');
+Route::get('/getuser/{id}', 'UserController@getUserById');
 
-Route::get('/profile/{id}/follow', 'UserController@toggleFollow');
+Route::delete('/deleteUser/{user}', 'UserController@destroy');
 
-Route::get('/profile/followers', 'UserController@getFollowers');
-
-Route::get('/profile/followings', 'UserController@getFollowings');
-
-Route::get('/profile/visibility', 'UserController@toggleVisibility');
-
-Route::get('/profile/{id}/checkLogIn', 'UserController@checkLogIn');
-
-Route::get('/profile/{id}/check', 'UserController@checkFollow');
-
-Route::get('/profile/{id}', 'UserController@profile');
-
-Route::patch('/profile', 'UserController@update');
-
-Route::get('/changePassword','UserController@showChangePasswordForm');
-
-Route::post('/changePassword','UserController@changePassword');
-
-Route::resource('/categories', 'CategoryController');
+Route::get('/cost/{user}', 'UserController@averageCost');
 
 Route::get('/admin', 'UserController@showAdmin')->middleware('admin');
 
 Route::get('/top', 'ItemController@top');
 
-Route::get('/timeline/stories', 'ItemController@getFolloweeStories');
-
-Route::delete('/deleteUser/{user}', 'UserController@destroy');
+Route::get('/timeline/stories', 'StoryController@getFolloweeStories');
 
 
-Route::get('/cost/{user}', 'UserController@averageCost');
+
+Route::get('/changePassword','UserController@showChangePasswordForm');
+
+Route::post('/changePassword','UserController@changePassword');
+
+
+Route::resource('/categories', 'CategoryController');
+
+
 

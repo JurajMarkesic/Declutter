@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Redis;
 class ItemController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth', ['only' => ['create','store','declutter','undoDeclutter']]);
+    }
 
     public function create()
     {
@@ -66,7 +70,7 @@ class ItemController extends Controller
         return view('item')->with('item', $item);
     }
 
-    public function stories(Item $item)
+    public function stories(Item $item)  //returns all stories for a certain item
     {
         $stories = $item->stories()->get();
 
@@ -145,17 +149,17 @@ class ItemController extends Controller
         ]);
     }
 
-    public function top()
+    public function top()   //returns top items by declutters and cost
     {
         if(Cache::has('top:items:declutters')) {
             $declutters = Cache::get('top:items:declutters');
         }else {
-            $declutters = DB::table('items')->orderBy('declutters', 'desc')->take(5)->get();
+            $declutters = DB::table('items')->orderBy('declutters', 'desc')->take(5)->get(); //gets top 5 items by declutters
             Cache::put('top:items:declutters', $declutters, 60);
         }
 
 
-        if (Cache::has('top:items:cost')) {
+        if (Cache::has('top:items:cost')) {              //gets top 5 items by average cost. N*M.
             $itemsByCost = Cache::get('top:items:cost');
         } else {
             $items = Item::with('stories')->get();
@@ -188,9 +192,9 @@ class ItemController extends Controller
                 array_push($itemsCost, $itemAverage);
             }
 
-            $sorted = $this->quicksort($itemsCost);
+            $sorted = $this->quicksortByCost($itemsCost);         //sorts all items by the average cost of their stories
 
-            $itemsByCost = array_slice($sorted, 0, 5);
+            $itemsByCost = array_slice($sorted, 0, 5);  //takes top 5 items
 
             Cache::put('top:items:cost', $itemsByCost, 60);
         }
@@ -200,7 +204,7 @@ class ItemController extends Controller
         return view('top', compact('itemsByCost', 'declutters'));
     }
 
-    private function quicksort($array) //desc
+    private function quicksortByCost($array) //desc
     {
         // find array size
         $length = count($array);
@@ -244,91 +248,8 @@ class ItemController extends Controller
             }
 
             // use recursion to now sort the left and right lists
-            return array_merge($this->quicksort($left), array($pivot), $this->quicksort($right));
+            return array_merge($this->quicksortByCost($left), array($pivot), $this->quicksortByCost($right));
         }
     }
 
-    public function getFolloweeStories()
-    {
-        $user = Auth::user();
-
-        if(Cache::has('follow:stories:'.$user->id)) {
-            $stories = Cache::get('follow:stories:'.$user->id);
-        } else {
-            $followings = $user->followings()->with('stories')->get();
-
-            $storiesAll = array();
-
-            foreach($followings as $followee) {
-                $latestStories = $followee->stories()->latest()->take(10)->get();
-
-                foreach($latestStories as $stry) {
-                    array_push($storiesAll, $stry);
-                }
-            }
-
-            $storiesAll = $this->quicksortByDate($storiesAll);
-
-
-            $stories = array_slice($storiesAll, 0,15);
-
-            foreach($stories as $stry) {
-                $stry->load(['owner', 'item']); //horrible
-            }
-
-            Cache::put('follow:stories:'.$user->id, $stories, 1);
-        }
-
-        return response()->json([
-            'stories' => $stories
-        ]);
-    }
-
-
-    private function quicksortByDate($array) {
-        // find array size
-        $length = count($array);
-
-        if ($length <= 1) {                                // base case test, if array of length 0 then just return array
-            return $array;
-        } else if ($length <= 10) {                       //insertion sort under 10 items
-            for ($i = 0; $i < count($array); $i++) {
-                $val = $array[$i];                      //current item
-
-                $j = $i - 1;                              //start loop on one item behind the current one
-
-                while ($j >= 0 && $array[$j]->created_at < $val->created_at) {         //stop loop when you reach item's place or the start of an array
-                    $array[$j + 1] = $array[$j];                    //switch values
-
-                    $j--;
-                }
-
-                $array[$j + 1] = $val;                //put value in it's current position, no items left off it are smaller
-            }
-
-            //return array back to be merged with the rest
-            return $array;
-        } else {
-
-            // select an item to act as our pivot point, since list is unsorted first position is easiest and you can
-            // choose to make the first item something that you suspect would have around median average cost.
-            // If it becomes a bottleneck use 3 pivots.
-            $pivot = $array[0];
-
-            // declare our two arrays to act as partitions
-            $left = $right = array();
-
-            // loop and compare each item in the array to the pivot value, place item in appropriate partition
-            for ($i = 1; $i < count($array); $i++) {
-                if ($array[$i]->created_at > $pivot->created_at) {
-                    $left[] = $array[$i];
-                } else {
-                    $right[] = $array[$i];
-                }
-            }
-
-            // use recursion to now sort the left and right lists
-            return array_merge($this->quicksort($left), array($pivot), $this->quicksort($right));
-        }
-    }
 }

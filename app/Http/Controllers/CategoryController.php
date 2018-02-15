@@ -9,6 +9,11 @@ use Cache;
 
 class CategoryController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth', ['only' => ['store','destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -55,7 +60,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        $items = $category->items()->get();
+        $items = $category->items()->take(10)->get();
 
         return view('category')->with('items', $items);
     }

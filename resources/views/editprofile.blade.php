@@ -1,11 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <a href="/changePassword">
-        <button class="btn btn-primary mt-5">Change Password</button>
-    </a>
 
-    <br>
+    <h3 class="font-weight-bold">Profile:</h3>
 
     <form action="/profile" method="POST" enctype="multipart/form-data" class="form mt-4">
         <input type="hidden" name="_method" value="PATCH">
@@ -29,4 +26,9 @@
     <br>
 
     <edit-profile :user="{{ $user }}"></edit-profile>
+
+    <a href="/changePassword">
+        <button class="btn btn-primary mt-5">Change Password</button>
+    </a>
+
 @endsection

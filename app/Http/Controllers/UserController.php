@@ -11,6 +11,12 @@ use Cache;
 class UserController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth', ['only' =>['searchUsers', 'edit', 'update', 'changePassword',
+            'toggleFollow','toggleVisibility','showAdmin','destroy']]);
+    }
+
     public function searchUsers(Request $request)
     {
         $query = $request->input('query');
@@ -80,8 +86,17 @@ class UserController extends Controller
         if($request->has('bio')) {
             $user->bio = $request->input('bio');
 
+            $user->update();
+
+            Cache::forget('user:full:' . Auth::id());
+
             return response("Bio updated.", 200);
         }
+
+        $user->update();
+
+        Cache::forget('user:full:' . Auth::id());
+
 
         return redirect()->back()->with('status', "Profile updated!");
     }
@@ -157,7 +172,7 @@ class UserController extends Controller
             ]);
     }
 
-    public function getFollowers()
+    public function getFollowers()  //returns users who follow currently authenticated user
     {
         $user = Auth::user();
 
@@ -171,7 +186,7 @@ class UserController extends Controller
         return view('followers')->with('followers',$followers);
     }
 
-    public function getFollowings()
+    public function getFollowings()  //returns users who currently authenticated user follows
     {
         $user = Auth::user();
 
@@ -211,7 +226,7 @@ class UserController extends Controller
         return false;
     }
 
-    public function averageCost(User $user)
+    public function averageCost(User $user)  //returns average cost of items user decluttered
     {
         if(Cache::has('user:cost:'.$user->id)) {
             $cost = Cache::get('user:cost:'.$user->id);

@@ -13,7 +13,7 @@ class User extends Authenticatable
     use Searchable;
 
     protected $fillable = [
-        'name', 'email', 'password','image', 'declutters'
+        'name', 'email', 'password','image', 'declutters', 'bio', 'public'
     ];
 
 

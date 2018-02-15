@@ -4,7 +4,7 @@
 
 
         <div v-if="!stories.length">
-            <h4>This is where you'll see activity of people you follow. No follower stories available.</h4>
+            <h4> No follower stories available. You should follow more people!</h4>
         </div>
         <timeline-item v-for="story in stories" :story="story" :key="story.id"></timeline-item>
     </div>

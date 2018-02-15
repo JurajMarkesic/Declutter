@@ -11,6 +11,11 @@ use Cache;
 class StoryController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth', ['only' => ['sore','update','destroy']]);
+    }
+
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -54,7 +59,7 @@ class StoryController extends Controller
         return response("Story updated.", 200);
     }
 
-    public function getUserStories(User $user)
+    public function getUserStories(User $user)  //returns and caches all stories created by the user
     {
         if(Cache::has('user:stories'.$user->id)) {
             $stories = Cache::get('user:stories'.$user->id);
@@ -66,6 +71,42 @@ class StoryController extends Controller
         return response()->json(['stories' => $stories]);
     }
 
+
+    public function getFolloweeStories()  //get sorted stories from the people you follow. Displayed on /home
+    {
+        $user = Auth::user();
+
+        if(Cache::has('follow:stories:'.$user->id)) {
+            $stories = Cache::get('follow:stories:'.$user->id);
+        } else {
+            $followings = $user->followings()->with('stories')->get();
+
+            $storiesAll = array();
+
+            foreach($followings as $followee) {
+                $latestStories = $followee->stories()->latest()->take(10)->get();
+
+                foreach($latestStories as $stry) {
+                    array_push($storiesAll, $stry);
+                }
+            }
+
+            $storiesAll = $this->quicksortByDate($storiesAll);  //sorts all stories in desc order
+
+
+            $stories = array_slice($storiesAll, 0,15);  //takes only the latest 15
+
+            foreach($stories as $stry) {
+                $stry->load(['owner', 'item']); //horrible
+            }
+
+            Cache::put('follow:stories:'.$user->id, $stories, 1);
+        }
+
+        return response()->json([
+            'stories' => $stories
+        ]);
+    }
 
     public function destroy(Story $story)
     {
@@ -80,6 +121,55 @@ class StoryController extends Controller
         } catch (\Exception $e) {
             report($e);
             return response("Story could not be deleted.", 404);
+        }
+    }
+
+
+
+    private function quicksortByDate($array) {
+        // find array size
+        $length = count($array);
+
+        if ($length <= 1) {                                // base case test, if array of length 0 then just return array
+            return $array;
+        } else if ($length <= 10) {                       //insertion sort under 10 items
+            for ($i = 0; $i < count($array); $i++) {
+                $val = $array[$i];                      //current item
+
+                $j = $i - 1;                              //start loop on one item behind the current one
+
+                while ($j >= 0 && $array[$j]->created_at < $val->created_at) {         //stop loop when you reach item's place or the start of an array
+                    $array[$j + 1] = $array[$j];                    //switch values
+
+                    $j--;
+                }
+
+                $array[$j + 1] = $val;                //put value in it's current position, no items left off it are smaller
+            }
+
+            //return array back to be merged with the rest
+            return $array;
+        } else {
+
+            // select an item to act as our pivot point, since list is unsorted first position is easiest and you can
+            // choose to make the first item something that you suspect would have around median average cost.
+            // If it becomes a bottleneck use 3 pivots.
+            $pivot = $array[0];
+
+            // declare our two arrays to act as partitions
+            $left = $right = array();
+
+            // loop and compare each item in the array to the pivot value, place item in appropriate partition
+            for ($i = 1; $i < count($array); $i++) {
+                if ($array[$i]->created_at > $pivot->created_at) {
+                    $left[] = $array[$i];
+                } else {
+                    $right[] = $array[$i];
+                }
+            }
+
+            // use recursion to now sort the left and right lists
+            return array_merge($this->quicksortByDate($left), array($pivot), $this->quicksortByDate($right));
         }
     }
 }

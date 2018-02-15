@@ -12,6 +12,8 @@
         </div>
         <br>
 
+        <h3 class="mt-3 font-weight-bold">Account:</h3>
+
         <label class="mt-4 lead">Profile Visibility:</label><br>
         <h5 v-if="isVisible">Public</h5>
         <h5 v-else>Private</h5>
@@ -35,7 +37,7 @@
         methods: {
             edit() {
                 axios.patch('/profile', {
-                    bio: this.user.bio
+                    'bio': this.user.bio
                 }).then(() => {
                     this.bioUpdated = true;
                 })

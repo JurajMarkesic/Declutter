@@ -8,7 +8,8 @@
             <img :src="imagePath" alt="user avatar" class=" col-12 col-md-3">
             <span class="username ml-5 col-11 col-md-7">{{ user.name }}</span>
         </div>
-        <p class="mb-5">{{ user.bio }}</p>
+        <h4 class="mt-4 ml-5 font-weight-bold">Bio:</h4>
+        <p class="mb-5 ml-5 mr-5 lead">{{ user.bio }}</p>
 
         <user-stories :stories="user.stories" :user="user"></user-stories>
     </div>
