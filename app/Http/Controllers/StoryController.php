@@ -126,7 +126,7 @@ class StoryController extends Controller
 
 
 
-    private function quicksortByDate($array) {
+    public function quicksortByDate($array) {
         // find array size
         $length = count($array);
 
