@@ -233,18 +233,23 @@ class UserController extends Controller
         } else {
             $stories = $user->stories()->get();
 
-            $total = 0;
+            if(!count($stories)) {
+                $cost = 0;
+            } else {
+                $total = 0;
 
-            $count = 0;
+                $count = 0;
 
-            foreach($stories as $story) {
-                $count++;
-                $total += $story->cost;
+                foreach($stories as $story) {
+                    $count++;
+                    $total += $story->cost;
+                }
+
+                $cost = $total / $count;
+
+                Cache::forever('user:cost:'.$user->id, $cost);
             }
 
-            $cost = $total / $count;
-
-            Cache::forever('user:cost:'.$user->id, $cost);
         }
 
         return response()->json(['cost' => $cost]);
