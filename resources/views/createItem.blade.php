@@ -5,7 +5,7 @@
         {{ csrf_field() }}
 
         <label>Name:</label>
-        <input type="text" name="name" class="form-control">
+        <input type="text" name="name" class="form-control"><br>
 
         <label>Select an image:</label>
         <input type="file" name="image" class="form-control"><br>

@@ -11,6 +11,8 @@ class SearchController extends Controller
     {
         $query = $request->input('query');
 
+        $result = array();
+
         $result = Item::search($query)->get();
 
         return view('result')->with('result', $result);
