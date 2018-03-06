@@ -13,4 +13,4 @@
 -Follow system<br>
 -Profile, timeline (twitter style)<br>
 
-It is deployed to Heroku and can be demo'd here: https://job-track-app.herokuapp.com/
+It is deployed to Heroku and can be demo'd here: https://declutter.herokuapp.com
