@@ -11,6 +11,6 @@
 -Item search<br>
 -Admin panel<br>
 -Follow system<br>
--Profile, timeline (twitter style)<br>
+-Profile, timeline (twitter style)<br><br>
 
 It is deployed to Heroku and can be demo'd here: https://declutter.herokuapp.com
