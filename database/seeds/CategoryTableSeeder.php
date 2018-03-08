@@ -11,7 +11,7 @@ class CategoryTableSeeder extends Seeder
      */
     public function run()
     {
-        $categories = ['Kitchen', 'Clothes','Jewelry'];
+        $categories = ['Kitchen', 'Clothes','Jewelry', 'Entertainment', 'Gadgets'];
 
         foreach($categories as $category) {
             DB::table('categories')->insert([
