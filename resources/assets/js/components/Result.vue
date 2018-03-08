@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row mb-4">
-            <img :src="imagePath" alt="result image" class="col-3 col-md-2">
+            <img :src="imagePath" alt="item image deleted by heroku on commit" class="col-3 col-md-2">
             <a :href="'/items/' + result.id" class="lead ml-3 col-7 green-link" id="catItem">{{ result.name }}</a>
         </div>
     </div>

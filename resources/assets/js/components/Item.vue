@@ -2,7 +2,7 @@
     <div>
         <div class="row mb-4">
             <div id="imgWrap" class="col-12 col-md-4">
-                <img :src="imagePath" alt="item image">
+                <img :src="imagePath" alt="item image deleted by heroku on commit">
             </div>
              <span class="display-4 col-11 col-md-7">{{ item.name }}</span>
         </div>
