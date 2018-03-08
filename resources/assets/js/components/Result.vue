@@ -27,7 +27,7 @@
 
 <style>
     img {
-        height: 80px;
+        height: 90px;
         border-radius: 50%;
     }
 
