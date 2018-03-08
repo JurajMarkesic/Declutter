@@ -13,4 +13,5 @@
 -Follow system<br>
 -Profile, timeline (twitter style)<br><br>
 
-It is deployed to Heroku and can be demo'd here: https://declutter.herokuapp.com
+It is deployed to Heroku and can be demo'd here: https://declutter.herokuapp.com <br>
+Note that heroku deletes files in storage on each commit with CI enabled. That causes most items not to have images attached.
