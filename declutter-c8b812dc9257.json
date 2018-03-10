@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "declutter-197609",
+  "private_key_id": "c8b812dc9257f7bf8c4a1518a5249e012938f789",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDgim1HUJeHVTSx\nwdzGFGq5luLpJDFbj4tcJ7SCXc/YOf+DvWmylJuLU/7zEWlVP0zHgaC9/HKJT5FK\nyjxA7xlv54fhMK/t3Zc7NWFjeQZopVwJNMxGDtdPoF/tX7ZhqarE4r9G1GigL1uk\n7OkhM7OBUEMAnQ+M9BGchYVff8zQn1EWfBr6o3Sh2UPvV0bgdwjr8nRoXM3jLxlg\nt6MVM8mMN6rTM1v4DaCDG3czKzXivEuCVLxcqW6WsOsKH/JTEkKJBgeH/6d4ztrp\nnArVv6tme35Obchfe33SINvgolp4apOP5qDHRJOAS5OZr92QaL3yJ2Cd23reUStZ\nmJNjlq9fAgMBAAECggEASC5HpcqzA1axK0laGrTagBGQnQi88yWIU5YR8WyN0YEH\ncgaUMUuTWu0kAmhA953zJRk3HovGF/zjhGrRhsA16aLAq/PWQj1fDbIBvhPcKwyp\nMu5tkkHYFilEXQ7NFsUPd946Rd8nSQMgTzq3UKyJklLGTy6uHo4hETNc5g+zvAY4\nfrq2oDrSkFJ9SlhUts+uIbPW/syUUgy/QvNhQYUlcj62Pqf4nK6Np3OF9+8FYOuS\njioLMryfOLApHq1/vRc7e/7bfjj2Xv8qH57PlxDD2jeNTBYTHyxoGyPgLnlPp+nT\nBhegtVjeZ3JoCZwQJlKMDqTVEEY9rtY1eXIjHV4V/QKBgQD/C6VXQEZ8d93Ee1Y/\nxO6kCZO6ov2VbV/GP3ZcUPb33eI9VmbbMHDJAS765bDfNS1WB+Zc8lgJTU6Z0a+y\n4VUXkQQLW4hVkj7ydj23W987ZuEzAhPxa0bEp8tmElCT/QERSVEOZsomToV8amoz\nf712LozDkwtGZKMax40HiLWxxQKBgQDhYY4TmAerP/UluqUSOXBPh5GjQLIfRMva\nCeLW1DMcSTOcRBd0r+1zQ6t+ouDQU5cFi63K6l2e2BqYigJuLwKAv7r6dyfDcaiz\nlqm9xakpZJHr8DVSdsjk8LZHXXN5x5PVQj6O0qh4pj3JzeIkG/k7rulT63cLYmSf\ntMv7Q+Ui0wKBgQCzi0dCPQVh6iA8iXcWPVSiNfvBj6xk3TJnJZX1NyolJBZ4h7Kw\n61D6r9Ka3ce92nmn7rfFBvXi1oFW176QdwCoLnZiaHV5iBK4LXUU96AW+T3f4r6X\nXaXcGyOdH5eKFroBqVNeiA4XGX/vLhrFVk/SOsLtiz6Mt5v65i/p9duy4QKBgEHA\nAwHGVV5pLyxNkgCKDzC0XRFiO1SR7mJyheGkUDDNTiglWS5qcHwy3qH4BFviNumg\nQRg0XRGM+91KTcE1J6bFyFdvUYNb8hpKNsStGFeCBmvtTLD9BEh9zL9vDNQXHBKX\n28YwwINKBDaOQI3GN2Ro95rK05TXpIFO7j8kJIGPAoGAWtDNDYyRtFVB44z4omON\nBafGca13bdDv3t0mMAybFPbIjQ7fqinB0btMXkQFFHXAX4hSWn/W9P2xYARpjH9S\n++8HbeFiowAOUe8+mm+S7R+3POxc4HxnIfjZcy58MoFlQ2P0MAgoRFoIeefWmsbn\nCcljHgfxhG2DpqajWOZQXwA=\n-----END PRIVATE KEY-----\n",
+  "client_email": "declutter@declutter-197609.iam.gserviceaccount.com",
+  "client_id": "109184077374500037426",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/declutter%40declutter-197609.iam.gserviceaccount.com"
+}

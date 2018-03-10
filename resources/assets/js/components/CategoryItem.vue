@@ -12,7 +12,7 @@
         ],
         computed: {
             imagePath() {
-                return '/storage/uploads/' + this.item.image;
+                return 'https://storage.googleapis.com/declutter/images/' + this.item.image;
             }
         }
     }

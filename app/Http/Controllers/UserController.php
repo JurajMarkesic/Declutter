@@ -76,9 +76,12 @@ class UserController extends Controller
 
             $imageName = rand(1111, 9999). time() . '.' . $image->getClientOriginalExtension();
 
-            $destinationPath = public_path('/storage/uploads/');
+//            $destinationPath = public_path('/storage/uploads/');
 
-            $image->move($destinationPath, $imageName);
+            $disk = \Storage::disk('gcs');
+
+
+            $disk->putFileAs('images',$image, $imageName);
 
             $user->image = $imageName;
         }

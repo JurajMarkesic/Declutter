@@ -2,7 +2,7 @@
     <div>
         <div class="row mb-4">
             <div id="imgWrap" class="col-12 col-md-4">
-                <img :src="imagePath" alt="item image deleted by heroku on commit">
+                <img :src="imagePath" alt="item image">
             </div>
              <span class="display-4 col-11 col-md-7">{{ item.name }}</span>
         </div>
@@ -34,7 +34,7 @@
         },
         computed: {
             imagePath() {
-                return '/storage/uploads/' + this.item.image;
+                return 'https://storage.googleapis.com/declutter/images/' + this.item.image;
             },
             avgCost() {
                 let count = this.item.stories.length;

@@ -58409,7 +58409,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     computed: {
         imagePath: function imagePath() {
-            return '/storage/uploads/' + this.item.image;
+            return 'https://storage.googleapis.com/declutter/images/' + this.item.image;
         },
         avgCost: function avgCost() {
             var count = this.item.stories.length;
@@ -59512,7 +59512,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\nimg {\n    height: 80px;\n    border-radius: 50%;\n}\n#catItem {\n    font-size: 1.5rem;\n}\n.green-link {\n    color: seagreen;\n}\n", ""]);
+exports.push([module.i, "\nimg {\n    height: 90px;\n    border-radius: 50%;\n}\n#catItem {\n    font-size: 1.5rem;\n}\n.green-link {\n    color: seagreen;\n}\n", ""]);
 
 // exports
 
@@ -59542,7 +59542,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {
         imagePath: function imagePath() {
 
-            return '/storage/uploads/' + this.result.image;
+            return 'https://storage.googleapis.com/declutter/images/' + this.result.image;
         }
     }
 });
@@ -59559,7 +59559,7 @@ var render = function() {
     _c("div", { staticClass: "row mb-4" }, [
       _c("img", {
         staticClass: "col-3 col-md-2",
-        attrs: { src: _vm.imagePath, alt: "result image" }
+        attrs: { src: _vm.imagePath, alt: "item image" }
       }),
       _vm._v(" "),
       _c(
@@ -59669,7 +59669,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\nimg {\n    height: 130px;\n    border-radius: 50%;\n}\n.username {\n    font-size: 2.8rem;\n}\n", ""]);
+exports.push([module.i, "\nimg {\n    height: 180px;\n    border-radius: 50%;\n}\n.username {\n    font-size: 2.8rem;\n}\n", ""]);
 
 // exports
 
@@ -59724,7 +59724,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {
         imagePath: function imagePath() {
-            return '/storage/uploads/' + this.user.image;
+            return 'https://storage.googleapis.com/declutter/images/' + this.user.image;
         }
     },
     created: function created() {
@@ -59928,7 +59928,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {
         imagePath: function imagePath() {
-            return '/storage/uploads/' + this.user.image;
+            return 'https://storage.googleapis.com/declutter/images/' + this.user.image;
         },
         followerCount: function followerCount() {
             return this.user.followers.length;
@@ -60811,7 +60811,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -60822,6 +60822,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -60844,13 +60845,18 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "mt-5" },
-    _vm._l(_vm.followers, function(user) {
-      return _c("tiny-follower", {
-        key: user.id,
-        staticClass: "col-6 col-md-2 float-left mb-3",
-        attrs: { user: user }
+    [
+      !_vm.followers.length ? _c("div", [_vm._v("No followers.")]) : _vm._e(),
+      _vm._v(" "),
+      _vm._l(_vm.followers, function(user) {
+        return _c("tiny-follower", {
+          key: user.id,
+          staticClass: "col-6 col-md-2 float-left mb-3",
+          attrs: { user: user }
+        })
       })
-    })
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -60949,7 +60955,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -60960,6 +60966,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -60982,13 +60989,18 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "mt-5" },
-    _vm._l(_vm.followings, function(user) {
-      return _c("tiny-followee", {
-        key: user.id,
-        staticClass: "col-6 col-md-2 float-left mb-3",
-        attrs: { user: user }
+    [
+      !_vm.followings.length ? _c("div", [_vm._v("No followers.")]) : _vm._e(),
+      _vm._v(" "),
+      _vm._l(_vm.followings, function(user) {
+        return _c("tiny-followee", {
+          key: user.id,
+          staticClass: "col-6 col-md-2 float-left mb-3",
+          attrs: { user: user }
+        })
       })
-    })
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -61126,7 +61138,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {
         imagePath: function imagePath() {
-            return '/storage/uploads/' + this.user.image;
+            return 'https://storage.googleapis.com/declutter/images/' + this.user.image;
         }
     }
 });
@@ -61298,7 +61310,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {
         imagePath: function imagePath() {
-            return '/storage/uploads/' + this.user.image;
+            return 'https://storage.googleapis.com/declutter/images/' + this.user.image;
         }
     },
     created: function created() {
@@ -62060,7 +62072,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: ['item'],
     computed: {
         imagePath: function imagePath() {
-            return '/storage/uploads/' + this.item.image;
+            return 'https://storage.googleapis.com/declutter/images/' + this.item.image;
         }
     }
 });
@@ -62392,7 +62404,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     computed: {
         imagePath: function imagePath() {
-            return '/storage/uploads/' + this.story.owner.image;
+            return 'https://storage.googleapis.com/declutter/images/' + this.story.owner.image;
         }
     }
 });
@@ -62584,7 +62596,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     computed: {
         imagePath: function imagePath() {
-            return '/storage/uploads/' + this.user.image;
+            return 'https://storage.googleapis.com/declutter/images/' + this.user.image;
         },
         followerCount: function followerCount() {
             return this.user.followers.length;

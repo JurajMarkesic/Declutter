@@ -20,7 +20,7 @@
         },
         computed: {
             imagePath() {
-                return '/storage/uploads/' + this.story.owner.image;
+                return 'https://storage.googleapis.com/declutter/images/' + this.story.owner.image;
             }
         }
     }

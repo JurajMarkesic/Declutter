@@ -4,7 +4,8 @@
 -Laravel 5.5<br>
 -MySQL<br>
 -Vue.js 2.5.13<br>
--Bootstrap 4<br><br>
+-Bootstrap 4<br>
+-Google Cloud Storage<br><br>
 
 <h4>Features</h4>
 -Item and Story CRUD with image upload<br>

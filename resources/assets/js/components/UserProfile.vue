@@ -38,7 +38,7 @@
         },
         computed: {
             imagePath() {
-                return '/storage/uploads/' + this.user.image;
+                return 'https://storage.googleapis.com/declutter/images/' + this.user.image;
             },
             followerCount() {
                 return this.user.followers.length;

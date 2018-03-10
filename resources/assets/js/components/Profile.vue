@@ -41,7 +41,7 @@
         },
         computed: {
             imagePath() {
-                return '/storage/uploads/' + this.user.image;
+                return 'https://storage.googleapis.com/declutter/images/' + this.user.image;
             }
         },
         created() {
@@ -52,7 +52,7 @@
 
 <style>
     img {
-        height: 130px;
+        height: 180px;
         border-radius: 50%;
     }
 
