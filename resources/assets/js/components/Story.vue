@@ -9,7 +9,7 @@
         </div>
 
         <div v-else>
-            <p class="font-weight-bold">{{ user.name }}</p>
+            <p class="font-weight-bold"><a :href="'/profile/' + user.id">{{ user.name }}</a></p>
             <p>{{ story.body }}</p>
             <p><b>Cost:</b> ${{ story.cost }}</p>
         </div>

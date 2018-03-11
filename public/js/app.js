@@ -58785,7 +58785,9 @@ var render = function() {
         ])
       : _c("div", [
           _c("p", { staticClass: "font-weight-bold" }, [
-            _vm._v(_vm._s(_vm.user.name))
+            _c("a", { attrs: { href: "/profile/" + _vm.user.id } }, [
+              _vm._v(_vm._s(_vm.user.name))
+            ])
           ]),
           _vm._v(" "),
           _c("p", [_vm._v(_vm._s(_vm.story.body))]),
