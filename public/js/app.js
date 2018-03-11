@@ -59512,7 +59512,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\nimg {\n    height: 90px;\n    border-radius: 50%;\n}\n#catItem {\n    font-size: 1.5rem;\n}\n.green-link {\n    color: seagreen;\n}\n", ""]);
+exports.push([module.i, "\nimg {\n    height: 120px;\n    border-radius: 50%;\n}\n#catItem {\n    font-size: 1.5rem;\n}\n.green-link {\n    color: seagreen;\n}\n", ""]);
 
 // exports
 
@@ -59669,7 +59669,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\nimg {\n    height: 180px;\n    border-radius: 50%;\n}\n.username {\n    font-size: 2.8rem;\n}\n", ""]);
+exports.push([module.i, "\nimg {\n    height: 220px;\n    border-radius: 50%;\n}\n.username {\n    font-size: 2.8rem;\n}\n", ""]);
 
 // exports
 
@@ -59880,7 +59880,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\nimg {\n    height: 130px;\n    border-radius: 50%;\n}\n", ""]);
+exports.push([module.i, "\nimg {\n    height: 220px;\n    border-radius: 50%;\n}\n", ""]);
 
 // exports
 
@@ -62049,7 +62049,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\nimg {\n    height: 80px;\n    border-radius: 50%;\n}\n#catItem {\n    font-size: 1.5rem;\n}\n.green-link {\n    color: seagreen;\n}\n", ""]);
+exports.push([module.i, "\nimg {\n    height: 120px;\n    border-radius: 50%;\n}\n#catItem {\n    font-size: 1.5rem;\n}\n.green-link {\n    color: seagreen;\n}\n", ""]);
 
 // exports
 

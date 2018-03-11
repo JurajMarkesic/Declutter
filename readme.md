@@ -5,6 +5,7 @@
 -MySQL<br>
 -Vue.js 2.5.13<br>
 -Bootstrap 4<br>
+-Redis<br>
 -Google Cloud Storage<br><br>
 
 <h4>Features</h4>

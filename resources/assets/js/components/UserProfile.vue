@@ -52,7 +52,7 @@
 
 <style>
     img {
-        height: 130px;
+        height: 220px;
         border-radius: 50%;
     }
 </style>
